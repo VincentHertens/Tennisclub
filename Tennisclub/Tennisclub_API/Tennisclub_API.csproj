@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tennisclub_Business_Layer\Tennisclub_Business_Layer.csproj" />
+    <ProjectReference Include="..\Tennisclub_Data_Layer\Tennisclub_Data_Layer.csproj" />
+    <ProjectReference Include="..\Tennisclub_Mapping\Tennisclub_Mapping.csproj" />
+  </ItemGroup>
+
+
+</Project>

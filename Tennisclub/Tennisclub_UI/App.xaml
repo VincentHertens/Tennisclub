@@ -1,0 +1,33 @@
+﻿<Application x:Class="Tennisclub_UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Tennisclub_UI"       
+             xmlns:views="clr-namespace:Tennisclub_UI.Views"
+             xmlns:viewmodels="clr-namespace:Tennisclub_UI.ViewModels"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <DataTemplate x:Name="membersViewTemplate" DataType="{x:Type viewmodels:MembersViewModel}">
+            <views:MembersView/>
+        </DataTemplate>
+        <DataTemplate x:Name="rolesViewTemplate" DataType="{x:Type viewmodels:RolesViewModel}">
+            <views:RolesView/>
+        </DataTemplate>
+        <DataTemplate x:Name="memberRolesViewTemplate" DataType="{x:Type viewmodels:MemberRolesViewModel}">
+            <views:MemberRolesView/>
+        </DataTemplate>
+        
+        <ControlTemplate x:Key="errorTemplate">
+            <StackPanel Orientation="Vertical">
+                <Grid>
+                    <Border BorderBrush="Red" BorderThickness="2">
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                    </Border>
+                </Grid>
+                <StackPanel>
+                    <TextBlock Foreground="Red" Text="{Binding [0].ErrorContent}"/>
+                </StackPanel>
+            </StackPanel>
+        </ControlTemplate>
+        
+    </Application.Resources>
+</Application>

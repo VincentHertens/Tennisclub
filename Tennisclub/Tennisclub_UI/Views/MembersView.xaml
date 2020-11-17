@@ -1,0 +1,753 @@
+﻿<UserControl x:Class="Tennisclub_UI.Views.MembersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:utils="clr-namespace:Tennisclub_UI.Validations"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="1400" Background="#36393f" Foreground="White">
+
+    <UserControl.Resources>
+        <Style x:Key="tabItemStyle" TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+            <Setter Property="Background" Value="#292b2f"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="15 4"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsSelected" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#292b2f"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0 0 0 10"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="125"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background"  Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background"  Value="#5c6fb1"/>
+                                <Setter Property="Foreground"  Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="textBoxAddStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Validation.ErrorTemplate" Value="{StaticResource errorTemplate}"/>
+        </Style>
+        <sys:String x:Key="requiredRegex">^\s*$</sys:String>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+
+        <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Background="#36393f" BorderThickness="0">
+            <TabItem x:Name="MemberOverviewTabItem" Header="Members Overview" Style="{StaticResource tabItemStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Members Overview" FontSize="28" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+
+                    <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0 0 15 0">
+                            <TextBlock Text="FederationNr" Foreground="White"/>
+                            <TextBox x:Name="FilterFedNrTextBox"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="0 0 15 0">
+                            <TextBlock Text="First Name" Foreground="White"/>
+                            <TextBox x:Name="FilterFirstNameTextBox"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Margin="0 0 15 0">
+                            <TextBlock Text="Last Name" Foreground="White"/>
+                            <TextBox x:Name="FilterLastNameTextBox"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="3" Margin="0 0 15 0">
+                            <TextBlock Text="ZIP code" Foreground="White"/>
+                            <TextBox x:Name="FilterZipcodeTextBox"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4" Margin="0 0 15 0">
+                            <TextBlock Text="City" Foreground="White"/>
+                            <TextBox x:Name="FilterCityTextBox"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <DataGrid x:Name="MembersListDataGrid"
+                                  Grid.Row="3" 
+                                  Grid.Column="1"
+                                  GridLinesVisibility="None" 
+                                  Margin="0,15,15,15"
+                                  CanUserAddRows="False"
+                                  AutoGenerateColumns="False"
+                                  BorderThickness="0"
+                                  SelectionMode="Single"
+                                  HeadersVisibility="Column"
+                                  CanUserResizeRows="False"
+                                  IsReadOnly="True"
+                                  ColumnWidth="*" 
+                                  Loaded="MembersListDataGrid_Loaded"
+                                  Background="White" Grid.ColumnSpan="2">
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#5c6fb1"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="FederationNr" Binding="{Binding FederationNr}"/>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="Birth Date" Binding="{Binding BirthDate, StringFormat=dd/MM/yyyy}"/>
+                            <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}"/>
+                            <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
+                            <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+                            <DataGridTextColumn Header="Addition" Binding="{Binding Addition}"/>
+                            <DataGridTextColumn Header="Zip Code" Binding="{Binding Zipcode}"/>
+                            <DataGridTextColumn Header="City" Binding="{Binding City}"/>
+                            <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Column="3" Grid.Row="3" Orientation="Vertical" Margin="0,15,0,0">
+                        <Grid VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Button x:Name="OverviewSearchBtn" Content="Search" Grid.Row="0" Click="OverviewSearchBtn_Click" Style="{DynamicResource btnStyle}"/>
+                            <Button x:Name="OverviewUpdateBtn" Content="Update Member" Grid.Row="1" Click="OverviewUpdateBtn_Click">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersListDataGrid}" Value="0">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button x:Name="OverviewDeleteBtn" Content="Delete Member" Grid.Row="2" Click="OverviewDeleteBtn_Click">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersListDataGrid}" Value="0">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="ArchiveTabItem" Header="Archive" Style="{StaticResource tabItemStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Inactive Members Overview" FontSize="28" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+
+                    <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0 0 15 0">
+                            <TextBlock Text="FederationNr" Foreground="White"/>
+                            <TextBox x:Name="FilterInactiveFedNrTextBox"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="0 0 15 0">
+                            <TextBlock Text="First Name" Foreground="White"/>
+                            <TextBox x:Name="FilterInactiveFirstNameTextBox"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Margin="0 0 15 0">
+                            <TextBlock Text="Last Name" Foreground="White"/>
+                            <TextBox x:Name="FilterInactiveLastNameTextBox"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="3" Margin="0 0 15 0">
+                            <TextBlock Text="ZIP code" Foreground="White"/>
+                            <TextBox x:Name="FilterInactiveZipcodeTextBox"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4" Margin="0 0 15 0">
+                            <TextBlock Text="City" Foreground="White"/>
+                            <TextBox x:Name="FilterInactiveCityTextBox"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <DataGrid x:Name="InactiveMembersListDataGrid"
+                                  Grid.Row="3" 
+                                  Grid.Column="1"
+                                  GridLinesVisibility="None" 
+                                  Margin="0,15,15,15"
+                                  CanUserAddRows="False"
+                                  AutoGenerateColumns="False"
+                                  BorderThickness="0"
+                                  SelectionMode="Single"
+                                  HeadersVisibility="Column"
+                                  CanUserResizeRows="False"
+                                  IsReadOnly="True"
+                                  ColumnWidth="*"                                   
+                                  Background="White" Grid.ColumnSpan="2" Loaded="InactiveMembersListDataGrid_Loaded">
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#5c6fb1"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="FederationNr" Binding="{Binding FederationNr}"/>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="Birth Date" Binding="{Binding BirthDate, StringFormat=dd/MM/yyyy}"/>
+                            <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}"/>
+                            <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
+                            <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+                            <DataGridTextColumn Header="Addition" Binding="{Binding Addition}"/>
+                            <DataGridTextColumn Header="Zip Code" Binding="{Binding Zipcode}"/>
+                            <DataGridTextColumn Header="City" Binding="{Binding City}"/>
+                            <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button x:Name="ArchiveSearchBtn" Content="Search" Margin="0,15,0,0" VerticalAlignment="Top" Grid.Column="3" Grid.Row="3" Style="{DynamicResource btnStyle}" Click="ArchiveSearchBtn_Click" />
+                </Grid>
+            </TabItem>
+            
+            <TabItem x:Name="AddMemberTabItem" Header="Add Member" Style="{StaticResource tabItemStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="AddVisualTree" Grid.Row="1" Grid.Column="1" Background="#2f3136" VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Text="Add a Member" FontSize="28" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 15" Foreground="White"/>
+
+                            <StackPanel Grid.Row="2" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="FederationNr" Foreground="White"/>
+                                <TextBox x:Name="AddFederationNrTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="FederationNr" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="10" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="3" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="First Name" Foreground="White"/>
+                                <TextBox x:Name="AddFirstNameTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="FirstName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="25" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="Last Name" Foreground="White"/>
+                                <TextBox x:Name="AddLastNameTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="LastName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="35" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="5" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="Birth Date" Foreground="White"/>
+                                <DatePicker x:Name="AddBirthDateDatePicker" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                    <DatePicker.SelectedDate>
+                                        <Binding Path="BirthDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:DateTimeValidationRule ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DatePicker.SelectedDate>
+                                </DatePicker>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="6" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="Gender" Foreground="White"/>
+                                <ComboBox x:Name="AddGenderComboBox" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True" Loaded="AddGenderComboBox_Loaded"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="7" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="PhoneNr" Foreground="White"/>
+                                <TextBox x:Name="AddPhoneNrTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="PhoneNr" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:NullableStringFieldValidationRule Length="15" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="Address" Foreground="White"/>
+                                <TextBox x:Name="AddAddressTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="Address" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="70" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="3" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="Number" Foreground="White"/>
+                                <TextBox x:Name="AddNumberTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="Number" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="6" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="Addition" Foreground="White"/>
+                                <TextBox x:Name="AddAdditionTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="Addition" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:NullableStringFieldValidationRule Length="2" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="5" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="ZIP code" Foreground="White"/>
+                                <TextBox x:Name="AddZipcodeTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="Zipcode" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="6" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="6" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="City" Foreground="White"/>
+                                <TextBox x:Name="AddCityTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="City" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="30" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <Button x:Name="AddMemberBtn" Content="Add Member" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" Click="AddMemberBtn_Click" Margin="0 5 0 0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddFederationNrTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddFirstNameTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddLastNameTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddPhoneNrTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddAddressTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddNumberTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddAdditionTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddZipcodeTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddCityTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddBirthDateDatePicker}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="UpdateMemberTabItem" Header="Update Member" Style="{StaticResource tabItemStyle}" Visibility="Hidden">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="UpdateVisualTree" Grid.Row="1" Grid.Column="1" Background="#2f3136" VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Text="Update a Member" FontSize="28" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 15" Foreground="White"/>
+
+                            <StackPanel Grid.Row="2" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="Id of selected member" Foreground="White"/>
+                                <TextBox x:Name="MemberIdTextBox" BorderThickness="1" IsReadOnly="True" Opacity="0.6" Text="{Binding Id, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="3" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="FederationNr" Foreground="White"/>
+                                <TextBox x:Name="UpdateFederationNrTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="FederationNr" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="10" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="First Name" Foreground="White"/>
+                                <TextBox x:Name="UpdateFirstNameTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="FirstName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="25" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="5" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="Last Name" Foreground="White"/>
+                                <TextBox x:Name="UpdateLastNameTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="LastName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="35" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="6" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="Birth Date" Foreground="White"/>
+                                <DatePicker x:Name="UpdateBirthDateDatePicker" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                    <DatePicker.SelectedDate>
+                                        <Binding Path="BirthDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:DateTimeValidationRule ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DatePicker.SelectedDate>
+                                </DatePicker>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="7" Grid.Column="1" Margin="0 0 15 15">
+                                <TextBlock Text="Gender" Foreground="White"/>
+                                <ComboBox x:Name="UpdateGenderComboBox" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True" SelectedValuePath="Id"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="7" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="PhoneNr" Foreground="White"/>
+                                <TextBox x:Name="UpdatePhoneNrTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="PhoneNr" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:NullableStringFieldValidationRule Length="15" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="Address" Foreground="White"/>
+                                <TextBox x:Name="UpdateAddressTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="Address" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="70" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="3" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="Number" Foreground="White"/>
+                                <TextBox x:Name="UpdateNumberTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="Number" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="6" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="Addition" Foreground="White"/>
+                                <TextBox x:Name="UpdateAdditionTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="Addition" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:NullableStringFieldValidationRule Length="2" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="5" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="ZIP code" Foreground="White"/>
+                                <TextBox x:Name="UpdateZipcodeTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="Zipcode" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="6" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="6" Grid.Column="2" Margin="0 0 15 15">
+                                <TextBlock Text="City" Foreground="White"/>
+                                <TextBox x:Name="UpdateCityTextBox" Style="{StaticResource textBoxAddStyle}">
+                                    <TextBox.Text>
+                                        <Binding Path="City" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <utils:RequiredStringFieldValidationRule Length="30" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <Button x:Name="UpdateMemberBtn" Content="Update Member" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" Margin="0 5 0 0" Click="UpdateMemberBtn_Click">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=MemberIdTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateFederationNrTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateFirstNameTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateLastNameTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdatePhoneNrTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateAddressTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateNumberTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateAdditionTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateZipcodeTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateCityTextBox}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateBirthDateDatePicker}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
