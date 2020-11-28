@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tennisclub_Common.GenderDTO;
+using Tennisclub_Common.MemberDTO;
 using Tennisclub_UI.ViewModels;
-using Tennisclub_UI.Helpers;
-using Tennisclub_Mapping.Dtos;
 
 namespace Tennisclub_UI.Views
 {
@@ -57,18 +57,19 @@ namespace Tennisclub_UI.Views
                 PhoneNr = AddPhoneNrTextBox.Text
             };
 
-            HttpResponseMessage response = APIHelper.ApiClient.PostAsJsonAsync("api/members/", member).Result;
-
-            if (response.IsSuccessStatusCode)
+            _ = WebAPI.Post<MemberReadDto, MemberCreateDto>("api/members/", member);
+            //WebAPI.LoopVisualTree(AddVisualTree);
+            MemberOverviewTabItem.IsSelected = true;
+            /*if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Member Added!");
-                APIHelper.LoopVisualTree(AddVisualTree);
+                WebAPI.LoopVisualTree(AddVisualTree);
                 MemberOverviewTabItem.IsSelected = true;
             }
             else
             {
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+            }*/
         }
 
         private void UpdateMemberBtn_Click(object sender, RoutedEventArgs e)
@@ -92,13 +93,13 @@ namespace Tennisclub_UI.Views
                 PhoneNr = UpdatePhoneNrTextBox.Text
             };
 
-            HttpResponseMessage response = APIHelper.ApiClient.PutAsJsonAsync("api/members/" + memberId, member).Result;
+            //HttpResponseMessage response = WebAPI.ApiClient.PutAsJsonAsync("api/members/" + memberId, member).Result;
 
-            if (response.IsSuccessStatusCode)
+            /*if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Member Updated!");
 
-                APIHelper.LoopVisualTree(UpdateVisualTree);              
+                WebAPI.LoopVisualTree(UpdateVisualTree);              
                 UpdateMemberTabItem.Visibility = Visibility.Hidden;
                 MemberOverviewTabItem.IsSelected = true;
 
@@ -106,7 +107,7 @@ namespace Tennisclub_UI.Views
             else
             {
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+            }*/
 
         }
 
@@ -114,7 +115,7 @@ namespace Tennisclub_UI.Views
         {
             if (MembersListDataGrid.SelectedItem is MemberReadDto member)
             {
-                HttpResponseMessage response = APIHelper.ApiClient.DeleteAsync("api/members/" + member.Id).Result;
+                /*HttpResponseMessage response = WebAPI.ApiClient.DeleteAsync("api/members/" + member.Id).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -124,7 +125,7 @@ namespace Tennisclub_UI.Views
                 else
                 {
                     MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-                }
+                }*/
             }
             else
             {
@@ -176,7 +177,7 @@ namespace Tennisclub_UI.Views
 
         private void GetMembers(string path, DataGrid dataGrid, TextBox fedTextBox, TextBox firstNameTextBox, TextBox lastNameTextBox, TextBox zipCodeTextBox, TextBox cityTextBox)
         {
-            HttpResponseMessage response = APIHelper.ApiClient.GetAsync(path + "?federationnr=" + fedTextBox.Text
+           /* HttpResponseMessage response = WebAPI.ApiClient.GetAsync(path + "?federationnr=" + fedTextBox.Text
                 + "&firstname=" + firstNameTextBox.Text
                 + "&lastname=" + lastNameTextBox.Text
                 + "&zipcode=" + zipCodeTextBox.Text
@@ -190,12 +191,12 @@ namespace Tennisclub_UI.Views
             else
             {
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+            }*/
         }
 
         private void GetGenders(ComboBox comboBox)
         {
-            HttpResponseMessage response = APIHelper.ApiClient.GetAsync("api/genders").Result;
+           /* HttpResponseMessage response = WebAPI.ApiClient.GetAsync("api/genders").Result;
             if (response.IsSuccessStatusCode)
             {
                 var genders = response.Content.ReadAsAsync<IEnumerable<GenderReadDto>>().Result;
@@ -204,7 +205,7 @@ namespace Tennisclub_UI.Views
             else
             {
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+            }*/
         }    
     }
 }

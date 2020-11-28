@@ -5,13 +5,15 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_API", "Tennisclub_API\Tennisclub_API.csproj", "{D01E4FEA-631A-457D-8DD0-A81E9F863199}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_Data_Layer", "Tennisclub_Data_Layer\Tennisclub_Data_Layer.csproj", "{BF1D6390-C407-4338-B186-7EDF0107371C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_DAL", "Tennisclub_DAL\Tennisclub_DAL.csproj", "{BF1D6390-C407-4338-B186-7EDF0107371C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_UI", "Tennisclub_UI\Tennisclub_UI.csproj", "{46C0545A-25D5-48A2-96EF-C09BC27F7246}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_Business_Layer", "Tennisclub_Business_Layer\Tennisclub_Business_Layer.csproj", "{F1E6B6B6-2D8B-4D3F-9E48-7328BE00C95C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_BL", "Tennisclub_BL\Tennisclub_BL.csproj", "{F1E6B6B6-2D8B-4D3F-9E48-7328BE00C95C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tennisclub_Mapping", "Tennisclub_Mapping\Tennisclub_Mapping.csproj", "{C610417D-7907-4E30-90D7-A66304E642CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_Common", "Tennisclub_Common\Tennisclub_Common.csproj", "{C610417D-7907-4E30-90D7-A66304E642CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tennisclub_WPF", "Tennisclub_WPF\Tennisclub_WPF.csproj", "{6080CCD4-1C17-4A73-AD8B-4BBD4EF92641}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C610417D-7907-4E30-90D7-A66304E642CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C610417D-7907-4E30-90D7-A66304E642CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C610417D-7907-4E30-90D7-A66304E642CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6080CCD4-1C17-4A73-AD8B-4BBD4EF92641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6080CCD4-1C17-4A73-AD8B-4BBD4EF92641}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6080CCD4-1C17-4A73-AD8B-4BBD4EF92641}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6080CCD4-1C17-4A73-AD8B-4BBD4EF92641}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,8 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using Tennisclub_Mapping.Dtos;
-using Tennisclub_UI.Helpers;
+using Tennisclub_Common.RoleDTO;
 
 namespace Tennisclub_UI.Views
 {
@@ -42,9 +41,9 @@ namespace Tennisclub_UI.Views
 
         private void AddRoleBtn_Click(object sender, RoutedEventArgs e)
         {
-            RoleCreateDto role = new RoleCreateDto{ Name = AddNameTextBox.Text };
+            /*RoleCreateDto role = new RoleCreateDto{ Name = AddNameTextBox.Text };
 
-            HttpResponseMessage response = APIHelper.ApiClient.PostAsJsonAsync("api/roles/", role).Result;
+            HttpResponseMessage response = WebAPI.ApiClient.PostAsJsonAsync("api/roles/", role).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -55,15 +54,15 @@ namespace Tennisclub_UI.Views
             else
             {
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+            }*/
         }
 
         private void UpdateRoleBtn_Click(object sender, RoutedEventArgs e)
         {
-            byte roleId = Convert.ToByte(RoleIdTextBox.Text);
+           /* byte roleId = Convert.ToByte(RoleIdTextBox.Text);
             RoleUpdateDto role = new RoleUpdateDto { Name = UpdateNameTextBox.Text };
 
-            HttpResponseMessage response = APIHelper.ApiClient.PutAsJsonAsync("api/roles/" + roleId, role).Result;
+            HttpResponseMessage response = WebAPI.ApiClient.PutAsJsonAsync("api/roles/" + roleId, role).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -76,12 +75,12 @@ namespace Tennisclub_UI.Views
             else
             {
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+            }*/
         }
 
         private void GetRoles()
         {
-            HttpResponseMessage response = APIHelper.ApiClient.GetAsync("api/roles").Result;
+            /*HttpResponseMessage response = WebAPI.ApiClient.GetAsync("api/roles").Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -91,7 +90,7 @@ namespace Tennisclub_UI.Views
             else
             {
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+            }*/
         }
     }
 }

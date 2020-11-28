@@ -12,8 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Tennisclub_Mapping.Dtos;
-using Tennisclub_UI.Helpers;
+using Tennisclub_Common.RoleDTO;
 
 namespace Tennisclub_UI.Views
 {
@@ -59,7 +58,7 @@ namespace Tennisclub_UI.Views
 
         private void GetMemberRoles(string path, DataGrid dataGrid)
         {
-            HttpResponseMessage response = APIHelper.ApiClient.GetAsync("api/memberroles" + path).Result;
+            /*HttpResponseMessage response = WebAPI.ApiClient.GetAsync("api/memberroles" + path).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -69,12 +68,12 @@ namespace Tennisclub_UI.Views
             else
             {
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+            }*/
         }
 
         private void GetRoles(ItemsControl box)
         {
-            HttpResponseMessage response = APIHelper.ApiClient.GetAsync("api/roles").Result;
+            /*HttpResponseMessage response = WebAPI.ApiClient.GetAsync("api/roles").Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -84,32 +83,32 @@ namespace Tennisclub_UI.Views
             else
             {
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+            }*/
         }
 
         private void AddMemberRoleBtn_Click(object sender, RoutedEventArgs e)
         {
-            RoleReadDto role = AddRoleComboBox.SelectedItem as RoleReadDto;            
-            MemberRoleCreateDto memberRole = new MemberRoleCreateDto
-            {
-                MemberId = Convert.ToInt32(AddMemberIdTextBox.Text),
-                RoleId = role.Id,
-                StartDate = AddStartDateDatePicker.SelectedDate.Value,
-                EndDate = AddEndDateDatePicker.SelectedDate
-            };
+            /* RoleReadDto role = AddRoleComboBox.SelectedItem as RoleReadDto;            
+             MemberRoleCreateDto memberRole = new MemberRoleCreateDto
+             {
+                 MemberId = Convert.ToInt32(AddMemberIdTextBox.Text),
+                 RoleId = role.Id,
+                 StartDate = AddStartDateDatePicker.SelectedDate.Value,
+                 EndDate = AddEndDateDatePicker.SelectedDate
+             };
 
-            HttpResponseMessage response = APIHelper.ApiClient.PostAsJsonAsync("api/memberroles/", memberRole).Result;
+             HttpResponseMessage response = WebAPI.ApiClient.PostAsJsonAsync("api/memberroles/", memberRole).Result;
 
-            if (response.IsSuccessStatusCode)
-            {
-                MessageBox.Show("Member Role Added!");
-                APIHelper.LoopVisualTree(AddVisualTree);
-                SpecificRolesTabItem.IsSelected = true;
-            }
-            else
-            {
-                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+             if (response.IsSuccessStatusCode)
+             {
+                 MessageBox.Show("Member Role Added!");
+                 WebAPI.LoopVisualTree(AddVisualTree);
+                 SpecificRolesTabItem.IsSelected = true;
+             }
+             else
+             {
+                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+             }*/
         }
 
         private void SpecificRolesUpdateButton_Click(object sender, RoutedEventArgs e)
@@ -124,7 +123,7 @@ namespace Tennisclub_UI.Views
 
         private void UpdateButton(DataGrid dataGrid)
         {
-            if (dataGrid.SelectedItem is MemberRoleReadDto memberRole)
+            /*if (dataGrid.SelectedItem is MemberRoleReadDto memberRole)
             {
                 if (memberRole.EndDate != null)
                 {
@@ -134,7 +133,7 @@ namespace Tennisclub_UI.Views
                         EndDate = memberRole.EndDate.Value
                     };
 
-                    HttpResponseMessage response = APIHelper.ApiClient.PutAsJsonAsync("api/memberroles/" + memberRole.Id, updatedMemberRole).Result;
+                    HttpResponseMessage response = WebAPI.ApiClient.PutAsJsonAsync("api/memberroles/" + memberRole.Id, updatedMemberRole).Result;
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -154,6 +153,7 @@ namespace Tennisclub_UI.Views
             {
                 MessageBox.Show("Select a Member Role!");
             }            
-        }        
+        }        */
+        }
     }
 }

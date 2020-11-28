@@ -1,0 +1,280 @@
+﻿<UserControl x:Class="Tennisclub_WPF.Views.MemberView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tennisclub_WPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="1400" Background="#36393f" Foreground="White">
+
+    <UserControl.Resources>
+        <Style x:Key="managementStackPanelStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="0,15,0,0"/>
+        </Style>
+        <Style x:Key="btnStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="Background" Value="#292b2f"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background"  Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background"  Value="#5c6fb1"/>
+                                <Setter Property="Foreground"  Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Overview -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="FederationNr"/>
+                    <TextBox x:Name="FilterFederationNrTextBox"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="First name"/>
+                    <TextBox x:Name="FilterFirstnameTextBox"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="Last name"/>
+                    <TextBox x:Name="FilterLastnameTextBox"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                    <TextBlock Text="ZIP code"/>
+                    <TextBox x:Name="FilterZipcodeTextBox"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="4" Margin="0,0,10,0">
+                    <TextBlock Text="City"/>
+                    <TextBox x:Name="FilterCityTextBox"/>
+                </StackPanel>
+            </Grid>
+            
+            <DataGrid x:Name="MembersDataGrid" ColumnWidth="*"
+                Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+                AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+                CanUserResizeRows="False" IsReadOnly="True" Background="White">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#5c6fb1"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="FederationNr" Binding="{Binding FederationNr}" Width="auto"/>
+                    <DataGridTextColumn Header="First name" Binding="{Binding FirstName}"/>
+                    <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
+                    <DataGridTextColumn Header="Birth date" Binding="{Binding BirthDate , StringFormat=dd/MM/yyyy}"/>
+                    <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}" Width="auto"/>
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+                    <DataGridTextColumn Header="Addition" Binding="{Binding Addition}"/>
+                    <DataGridTextColumn Header="Zip code" Binding="{Binding Zipcode}"/>
+                    <DataGridTextColumn Header="City" Binding="{Binding City}"/>
+                    <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            
+        </Grid>
+
+        <!-- Create, update, delete -->
+        <Grid x:Name="ManagementGrid" Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Member management" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold"/>
+
+                <StackPanel Grid.Row="1" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="FederationNr"/>
+                    <TextBox x:Name="ManagementFederationNrTextBox" Text="{Binding SelectedItem.FederationNr, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="First name"/>
+                    <TextBox x:Name="ManagementFirstNameTextBox" Text="{Binding SelectedItem.FirstName, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="Last name"/>
+                    <TextBox x:Name="ManagementLastNameTextBox" Text="{Binding SelectedItem.LastName, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="4" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="Birth date"/>
+                    <DatePicker x:Name="ManagementBirthDateDatePicker" SelectedDate="{Binding SelectedItem.BirthDate, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="5" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="Gender"/>
+                    <ComboBox x:Name="ManagementGenderComboBox" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="{Binding SelectedItem.Gender.Name, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="6" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="Address"/>
+                    <TextBox x:Name="ManagementAddressTextBox" Text="{Binding SelectedItem.Address, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="7" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="Number"/>
+                    <TextBox x:Name="ManagementNumberTextBox" Text="{Binding SelectedItem.Number, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="8" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="Addition"/>
+                    <TextBox x:Name="ManagementAdditionTextBox" Text="{Binding SelectedItem.Addition, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="9" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="ZIP code"/>
+                    <TextBox x:Name="ManagementZipCodeTextBox" Text="{Binding SelectedItem.Zipcode, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="10" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="City"/>
+                    <TextBox x:Name="ManagementCityTextBox" Text="{Binding SelectedItem.City, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="11" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="PhoneNr"/>
+                    <TextBox x:Name="ManagementPhoneNrTextBox" Text="{Binding SelectedItem.PhoneNr, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <Button x:Name="AddMemberBtn" Content="Add member" Grid.Row="12" Click="AddMemberBtn_Click">                   
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="1">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button x:Name="UpdateMemberBtn" Content="Update member" Grid.Row="12" Click="UpdateMemberBtn_Click">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button x:Name="DeleteMemberBtn" Content="Delete member" Grid.Row="13" Click="DeleteMemberBtn_Click">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button x:Name="NewMemberBtn" Content="New member" Grid.Row="14" Click="NewMemberBtn_Click">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+            </Grid>
+        </Grid>
+        
+    </Grid>
+</UserControl>

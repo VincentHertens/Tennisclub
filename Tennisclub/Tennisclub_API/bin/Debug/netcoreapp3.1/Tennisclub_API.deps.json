@@ -24,11 +24,9 @@
     ".NETCoreApp,Version=v3.1": {
       "Tennisclub_API/1.0.0": {
         "dependencies": {
-          "AutoMapper": "10.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.0",
-          "Tennisclub_Business_Layer": "1.0.0",
-          "Tennisclub_Data_Layer": "1.0.0",
-          "Tennisclub_Mapping": "1.0.0",
+          "Tennisclub_BL": "1.0.0",
+          "Tennisclub_DAL": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.1.0.0",
@@ -1408,41 +1406,38 @@
           "System.Xml.XmlDocument": "4.3.0"
         }
       },
-      "Tennisclub_Business_Layer/1.0.0": {
+      "Tennisclub_BL/1.0.0": {
         "dependencies": {
           "AutoMapper": "10.1.1",
-          "Tennisclub_Data_Layer": "1.0.0",
-          "Tennisclub_Mapping": "1.0.0"
+          "Tennisclub_DAL": "1.0.0"
         },
         "runtime": {
-          "Tennisclub_Business_Layer.dll": {}
+          "Tennisclub_BL.dll": {}
         },
         "compile": {
-          "Tennisclub_Business_Layer.dll": {}
+          "Tennisclub_BL.dll": {}
         }
       },
-      "Tennisclub_Data_Layer/1.0.0": {
+      "Tennisclub_Common/1.0.0": {
+        "runtime": {
+          "Tennisclub_Common.dll": {}
+        },
+        "compile": {
+          "Tennisclub_Common.dll": {}
+        }
+      },
+      "Tennisclub_DAL/1.0.0": {
         "dependencies": {
+          "AutoMapper": "10.1.1",
           "Microsoft.EntityFrameworkCore": "3.1.8",
-          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.8"
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.8",
+          "Tennisclub_Common": "1.0.0"
         },
         "runtime": {
-          "Tennisclub_Data_Layer.dll": {}
+          "Tennisclub_DAL.dll": {}
         },
         "compile": {
-          "Tennisclub_Data_Layer.dll": {}
-        }
-      },
-      "Tennisclub_Mapping/1.0.0": {
-        "dependencies": {
-          "AutoMapper": "10.1.1",
-          "Tennisclub_Data_Layer": "1.0.0"
-        },
-        "runtime": {
-          "Tennisclub_Mapping.dll": {}
-        },
-        "compile": {
-          "Tennisclub_Mapping.dll": {}
+          "Tennisclub_DAL.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -3767,17 +3762,17 @@
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
-    "Tennisclub_Business_Layer/1.0.0": {
+    "Tennisclub_BL/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Tennisclub_Data_Layer/1.0.0": {
+    "Tennisclub_Common/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Tennisclub_Mapping/1.0.0": {
+    "Tennisclub_DAL/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

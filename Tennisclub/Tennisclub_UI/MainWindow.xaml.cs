@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Tennisclub_UI.Helpers;
 using Tennisclub_UI.ViewModels;
 
 namespace Tennisclub_UI
@@ -17,7 +16,6 @@ namespace Tennisclub_UI
         public MainWindow()
         {
             InitializeComponent();
-            APIHelper.InitializeClient();
             DataContext = new MainViewModel();            
         }     
     }

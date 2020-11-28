@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\gameResultsGreyIcon.png" />
+    <None Remove="Assets\gamesGreyIcon.png" />
+    <None Remove="Assets\memberFinesGreyIcon.png" />
+    <None Remove="Assets\memberRolesGreyIcon.png" />
+    <None Remove="Assets\membersGreyIcon.png" />
+    <None Remove="Assets\roleGreyIcon.png" />
+    <None Remove="Assets\rolesGreyIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tennisclub_Common\Tennisclub_Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\gameResultsGreyIcon.png" />
+    <Resource Include="Assets\gamesGreyIcon.png" />
+    <Resource Include="Assets\memberFinesGreyIcon.png" />
+    <Resource Include="Assets\memberRolesGreyIcon.png" />
+    <Resource Include="Assets\membersGreyIcon.png" />
+    <Resource Include="Assets\roleGreyIcon.png" />
+    <Resource Include="Assets\rolesGreyIcon.png" />
+  </ItemGroup>
+
+</Project>

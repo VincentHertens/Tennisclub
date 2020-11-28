@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "qLw7Dxu2x43Bz2AqfbnNcrlyNID4sgvDsnH65ie+XPEpI93QwayEMeChzS2spdjWHXhIWHBt4HUo0jEZy1ih3A==",
+  "success": true,
+  "projectFilePath": "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_WPF\\Tennisclub_WPF.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Vincent Hertens\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

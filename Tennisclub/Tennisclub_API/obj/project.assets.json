@@ -1488,47 +1488,44 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Tennisclub_Business_Layer/1.0.0": {
+      "Tennisclub_BL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "AutoMapper": "10.1.1",
-          "Tennisclub_Data_Layer": "1.0.0",
-          "Tennisclub_Mapping": "1.0.0"
+          "Tennisclub_DAL": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Tennisclub_Business_Layer.dll": {}
+          "bin/placeholder/Tennisclub_BL.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Tennisclub_Business_Layer.dll": {}
+          "bin/placeholder/Tennisclub_BL.dll": {}
         }
       },
-      "Tennisclub_Data_Layer/1.0.0": {
+      "Tennisclub_Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Tennisclub_Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Tennisclub_Common.dll": {}
+        }
+      },
+      "Tennisclub_DAL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "AutoMapper": "10.1.1",
           "Microsoft.EntityFrameworkCore": "3.1.8",
-          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.8"
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.8",
+          "Tennisclub_Common": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Tennisclub_Data_Layer.dll": {}
+          "bin/placeholder/Tennisclub_DAL.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Tennisclub_Data_Layer.dll": {}
-        }
-      },
-      "Tennisclub_Mapping/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "AutoMapper": "10.1.1",
-          "Tennisclub_Data_Layer": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Tennisclub_Mapping.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Tennisclub_Mapping.dll": {}
+          "bin/placeholder/Tennisclub_DAL.dll": {}
         }
       }
     }
@@ -5701,29 +5698,27 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
-    "Tennisclub_Business_Layer/1.0.0": {
+    "Tennisclub_BL/1.0.0": {
       "type": "project",
-      "path": "../Tennisclub_Business_Layer/Tennisclub_Business_Layer.csproj",
-      "msbuildProject": "../Tennisclub_Business_Layer/Tennisclub_Business_Layer.csproj"
+      "path": "../Tennisclub_BL/Tennisclub_BL.csproj",
+      "msbuildProject": "../Tennisclub_BL/Tennisclub_BL.csproj"
     },
-    "Tennisclub_Data_Layer/1.0.0": {
+    "Tennisclub_Common/1.0.0": {
       "type": "project",
-      "path": "../Tennisclub_Data_Layer/Tennisclub_Data_Layer.csproj",
-      "msbuildProject": "../Tennisclub_Data_Layer/Tennisclub_Data_Layer.csproj"
+      "path": "../Tennisclub_Common/Tennisclub_Common.csproj",
+      "msbuildProject": "../Tennisclub_Common/Tennisclub_Common.csproj"
     },
-    "Tennisclub_Mapping/1.0.0": {
+    "Tennisclub_DAL/1.0.0": {
       "type": "project",
-      "path": "../Tennisclub_Mapping/Tennisclub_Mapping.csproj",
-      "msbuildProject": "../Tennisclub_Mapping/Tennisclub_Mapping.csproj"
+      "path": "../Tennisclub_DAL/Tennisclub_DAL.csproj",
+      "msbuildProject": "../Tennisclub_DAL/Tennisclub_DAL.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "AutoMapper >= 10.1.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.1.0",
-      "Tennisclub_Business_Layer >= 1.0.0",
-      "Tennisclub_Data_Layer >= 1.0.0",
-      "Tennisclub_Mapping >= 1.0.0"
+      "Tennisclub_BL >= 1.0.0",
+      "Tennisclub_DAL >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5756,14 +5751,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_Business_Layer\\Tennisclub_Business_Layer.csproj": {
-              "projectPath": "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_Business_Layer\\Tennisclub_Business_Layer.csproj"
+            "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_BL\\Tennisclub_BL.csproj": {
+              "projectPath": "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_BL\\Tennisclub_BL.csproj"
             },
-            "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_Data_Layer\\Tennisclub_Data_Layer.csproj": {
-              "projectPath": "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_Data_Layer\\Tennisclub_Data_Layer.csproj"
-            },
-            "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_Mapping\\Tennisclub_Mapping.csproj": {
-              "projectPath": "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_Mapping\\Tennisclub_Mapping.csproj"
+            "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_DAL\\Tennisclub_DAL.csproj": {
+              "projectPath": "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_DAL\\Tennisclub_DAL.csproj"
             }
           }
         }
@@ -5777,10 +5769,6 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
-          "AutoMapper": {
-            "target": "Package",
-            "version": "[10.1.1, )"
-          },
           "AutoMapper.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
             "version": "[8.1.0, )"

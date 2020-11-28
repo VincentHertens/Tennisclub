@@ -175,10 +175,6 @@ E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_Business_Layer.dll
-E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_Data_Layer.dll
-E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_Business_Layer.pdb
-E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_Data_Layer.pdb
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\obj\Debug\netcoreapp3.1\Tennisclub_API.csprojAssemblyReference.cache
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\obj\Debug\netcoreapp3.1\Tennisclub_API.AssemblyInfoInputs.cache
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\obj\Debug\netcoreapp3.1\Tennisclub_API.AssemblyInfo.cs
@@ -189,8 +185,12 @@ E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\obj\Debug\
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\obj\Debug\netcoreapp3.1\Tennisclub_API.dll
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\obj\Debug\netcoreapp3.1\Tennisclub_API.pdb
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\obj\Debug\netcoreapp3.1\Tennisclub_API.genruntimeconfig.cache
-E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_Mapping.dll
-E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_Mapping.pdb
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\obj\Debug\netcoreapp3.1\Tennisclub_API.csproj.CoreCompileInputs.cache
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\obj\Debug\netcoreapp3.1\Tennisclub_API.MvcApplicationPartsAssemblyInfo.cache
+E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_BL.dll
+E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_Common.dll
+E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_DAL.dll
+E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_BL.pdb
+E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_DAL.pdb
+E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_API\bin\Debug\netcoreapp3.1\Tennisclub_Common.pdb
