@@ -18,6 +18,12 @@ namespace Tennisclub_BL.Services.RoleServices
             return _repository.GetAll();
         }
 
+        public RoleReadDto GetById(byte id)
+        {
+            return _repository.GetById(id);
+        }
+
+
         public RoleReadDto Add(RoleCreateDto roleCreateDto)
         {
             return _repository.Add(roleCreateDto);

@@ -17,21 +17,45 @@ namespace Tennisclub_API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<RoleReadDto> GetAll()
+        public ActionResult<IEnumerable<RoleReadDto>> GetAll()
         {
-            return _service.GetAll();
+            return Ok(_service.GetAll());
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<RoleReadDto> GetById(byte id)
+        {
+            var role = _service.GetById(id);
+            if (role != null)
+            {
+                return Ok(_service.GetById(id));
+            }
+            return NotFound();
         }
 
         [HttpPost]
-        public RoleReadDto Add(RoleCreateDto roleCreateDto)
+        public ActionResult<RoleReadDto> Add(RoleCreateDto roleCreateDto)
         {
-            return _service.Add(roleCreateDto);
+            if (roleCreateDto == null)
+            {
+                return BadRequest("Role cannot be null");
+            }
+            if (string.IsNullOrEmpty(roleCreateDto.Name))
+            {
+                return BadRequest(new { Message = "Name cannot be empty" });
+            }
+            var role = _service.Add(roleCreateDto);
+            return CreatedAtAction(nameof(GetById), new { id = role.Id }, role);
         }
 
         [HttpPut]
-        public RoleReadDto Update(RoleUpdateDto roleUpdateDto)
+        public ActionResult<RoleReadDto> Update(RoleUpdateDto roleUpdateDto)
         {
-            return _service.Update(roleUpdateDto);
+            if (roleUpdateDto == null)
+            {
+                return BadRequest(new { Message = "Role cannot be empty" });
+            }
+            return Ok(_service.Update(roleUpdateDto));
         }
 
         /*private readonly IRoleService _roleService;

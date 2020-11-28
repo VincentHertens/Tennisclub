@@ -5,8 +5,145 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tennisclub_WPF.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="900" d:DesignWidth="1400" Background="#36393f" Foreground="White">
+
+    <UserControl.Resources>
+        <Style x:Key="managementStackPanelStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="0,15,0,0"/>
+        </Style>
+        <Style x:Key="btnStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="Background" Value="#292b2f"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background"  Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background"  Value="#5c6fb1"/>
+                                <Setter Property="Foreground"  Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
-        <TextBlock Text="ROLES" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <DataGrid x:Name="RolesDataGrid" ColumnWidth="*"
+            Grid.Row="1" Grid.Column="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+            AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+            CanUserResizeRows="False" IsReadOnly="True" Background="White">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#5c6fb1"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid x:Name="ManagementGrid" Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Role management" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold"/>
+
+                <StackPanel Grid.Row="1" Style="{StaticResource managementStackPanelStyle}">
+                    <TextBlock Text="Name"/>
+                    <TextBox x:Name="ManagementNameTextBox" Text="{Binding SelectedItem.Name, ElementName=RolesDataGrid, Mode=OneWay}"/>
+                </StackPanel>
+
+                <Button x:Name="AddRoleBtn" Content="Add role" Grid.Row="2" Click="AddRoleBtn_Click">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=RolesDataGrid}" Value="1">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button x:Name="UpdateRoleBtn" Content="Update role" Grid.Row="2" Click="UpdateRoleBtn_Click">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=RolesDataGrid}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button x:Name="NewRoleBtn" Content="New role" Grid.Row="3" Click="NewRoleBtn_Click">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=RolesDataGrid}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Grid>
+        
     </Grid>
 </UserControl>

@@ -17,33 +17,85 @@ namespace Tennisclub_API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<MemberReadDto> GetAll([FromQuery] string federationNr, [FromQuery] string firstName, [FromQuery] string lastName, [FromQuery] string zipCode, [FromQuery] string city)
+        public ActionResult<IEnumerable<MemberReadDto>> GetAll([FromQuery] string federationNr, [FromQuery] string firstName, [FromQuery] string lastName, [FromQuery] string zipCode, [FromQuery] string city)
         {
-            return _service.GetAllActiveMembers(federationNr, firstName, lastName, zipCode, city);
+            return Ok(_service.GetAllActiveMembers(federationNr, firstName, lastName, zipCode, city));
         }
 
         [HttpGet("{id}")]
-        public MemberReadDto GetById(int id)
+        public ActionResult<MemberReadDto> GetById(int id)
         {
-            return _service.GetById(id);
+            var member = _service.GetById(id);
+            if (member != null)
+            {
+                return Ok(member);
+            }
+            return NotFound();
         }
 
         [HttpPost]
-        public MemberReadDto Add(MemberCreateDto memberCreateDto)
+        public ActionResult<MemberReadDto> Add(MemberCreateDto memberCreateDto)
         {
-            return _service.Add(memberCreateDto);
+            if (memberCreateDto == null)
+            {
+                return BadRequest(new { Message = "Member cannot be empty" });
+            }
+            if (string.IsNullOrEmpty(memberCreateDto.FederationNr))
+            {
+                return BadRequest(new { Message = "FederationNr cannot be empty" });
+            }
+            if (string.IsNullOrEmpty(memberCreateDto.FirstName))
+            {
+                return BadRequest(new { Message = "First name cannot be empty" });
+            }
+            if (string.IsNullOrEmpty(memberCreateDto.LastName))
+            {
+                return BadRequest(new { Message = "Last name cannot be empty" });
+            }
+            if (string.IsNullOrEmpty(memberCreateDto.Address))
+            {
+                return BadRequest(new { Message = "Address cannot be empty" });
+            }
+            if (string.IsNullOrEmpty(memberCreateDto.Number))
+            {
+                return BadRequest(new { Message = "Number cannot be empty" });
+            }
+            if (string.IsNullOrEmpty(memberCreateDto.Zipcode))
+            {
+                return BadRequest(new { Message = "ZIP code cannot be empty" });
+            }
+            if (string.IsNullOrEmpty(memberCreateDto.City))
+            {
+                return BadRequest(new { Message = "City cannot be empty" });
+            }
+            if (string.IsNullOrEmpty(memberCreateDto.LastName))
+            {
+                return BadRequest(new { Message = "Last name cannot be empty" });
+            }
+            var member = _service.Add(memberCreateDto);
+            return CreatedAtAction(nameof(GetById), new { id = member.Id }, member);
         }
 
         [HttpPut]
-        public MemberReadDto Update(MemberUpdateDto memberUpdateDto)
+        public ActionResult<MemberReadDto> Update(MemberUpdateDto memberUpdateDto)
         {
-            return _service.Update(memberUpdateDto);
+            if (memberUpdateDto == null)
+            {
+                return BadRequest(new { Message = "Member cannot be empty" });
+            }
+            return Ok(_service.Update(memberUpdateDto));
         }
 
         [HttpDelete("delete/{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var member = _service.GetById(id);
+            if (member == null)
+            {
+                return NotFound();
+            }
             _service.Delete(id);
+            return NoContent();
         }
 
         /*private readonly IMemberService _memberService;

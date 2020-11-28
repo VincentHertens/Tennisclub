@@ -99,6 +99,14 @@ namespace Tennisclub_WPF.Views
             _ = LoadMembers();
         }
 
+        private void OnEnterHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                _ = LoadMembers();
+            }
+        }
+
         private void NewMemberBtn_Click(object sender, RoutedEventArgs e)
         {
             MembersDataGrid.SelectedItem = null;
