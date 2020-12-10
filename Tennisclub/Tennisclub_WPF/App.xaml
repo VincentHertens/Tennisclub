@@ -12,5 +12,22 @@
         <DataTemplate DataType="{x:Type viewmodels:RoleViewModel}">
             <views:RoleView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:MemberRoleViewModel}">
+            <views:MemberRoleView/>
+        </DataTemplate>
+
+        <ControlTemplate x:Key="errorTemplate">
+            <StackPanel Orientation="Vertical">
+                <Grid>
+                    <Border BorderBrush="#f5574c" BorderThickness="1.5">
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                    </Border>
+                </Grid>
+                <StackPanel>
+                    <TextBlock Foreground="#f5574c" Text="{Binding [0].ErrorContent}"/>
+                </StackPanel>
+            </StackPanel>
+        </ControlTemplate>
+
     </Application.Resources>
 </Application>

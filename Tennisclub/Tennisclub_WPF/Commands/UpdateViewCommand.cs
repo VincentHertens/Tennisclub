@@ -47,6 +47,7 @@ namespace Tennisclub_WPF.Commands
                     viewModel.SelectedViewModel = new RoleViewModel();
                     break;
                 case nameof(Parameters.MemberRoles):
+                    viewModel.SelectedViewModel = new MemberRoleViewModel();
                     break;
                 case nameof(Parameters.MemberFines):
                     break;

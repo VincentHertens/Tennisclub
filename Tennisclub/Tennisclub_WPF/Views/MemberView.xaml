@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tennisclub_WPF.Views"
+             xmlns:utils="clr-namespace:Tennisclub_WPF.Validations"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1400" Background="#36393f" Foreground="White">
 
@@ -44,6 +46,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <sys:String x:Key="requiredRegex">^\s*$</sys:String>
     </UserControl.Resources>
 
     <Grid>
@@ -104,7 +107,7 @@
             <DataGrid x:Name="MembersDataGrid" ColumnWidth="*"
                 Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
                 AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
-                CanUserResizeRows="False" IsReadOnly="True" Background="White">
+                CanUserResizeRows="False" IsReadOnly="True" Background="White" SelectedItem="{Binding Member}">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
                         <Style.Triggers>
@@ -169,22 +172,54 @@
 
                 <StackPanel Grid.Row="1" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="FederationNr"/>
-                    <TextBox x:Name="ManagementFederationNrTextBox" Text="{Binding SelectedItem.FederationNr, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementFederationNrTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="FederationNr" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:RequiredStringFieldValidationRule Length="10" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="First name"/>
-                    <TextBox x:Name="ManagementFirstNameTextBox" Text="{Binding SelectedItem.FirstName, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementFirstNameTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="FirstName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:RequiredStringFieldValidationRule Length="25" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="Last name"/>
-                    <TextBox x:Name="ManagementLastNameTextBox" Text="{Binding SelectedItem.LastName, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementLastNameTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="LastName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:RequiredStringFieldValidationRule Length="35" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="4" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="Birth date"/>
-                    <DatePicker x:Name="ManagementBirthDateDatePicker" SelectedDate="{Binding SelectedItem.BirthDate, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <DatePicker x:Name="ManagementBirthDateDatePicker" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <DatePicker.SelectedDate>
+                            <Binding Path="BirthDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:DateTimeValidationRule ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DatePicker.SelectedDate>
+                    </DatePicker>
                 </StackPanel>
 
                 <StackPanel Grid.Row="5" Style="{StaticResource managementStackPanelStyle}">
@@ -194,42 +229,106 @@
 
                 <StackPanel Grid.Row="6" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="Address"/>
-                    <TextBox x:Name="ManagementAddressTextBox" Text="{Binding SelectedItem.Address, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementAddressTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="Address" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:RequiredStringFieldValidationRule Length="70" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="7" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="Number"/>
-                    <TextBox x:Name="ManagementNumberTextBox" Text="{Binding SelectedItem.Number, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementNumberTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="Number" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:RequiredStringFieldValidationRule Length="6" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="8" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="Addition"/>
-                    <TextBox x:Name="ManagementAdditionTextBox" Text="{Binding SelectedItem.Addition, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementAdditionTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="Addition" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:NullableStringFieldValidationRule Length="2" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="9" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="ZIP code"/>
-                    <TextBox x:Name="ManagementZipCodeTextBox" Text="{Binding SelectedItem.Zipcode, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementZipCodeTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="Zipcode" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:RequiredStringFieldValidationRule Length="6" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="10" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="City"/>
-                    <TextBox x:Name="ManagementCityTextBox" Text="{Binding SelectedItem.City, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementCityTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="City" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:RequiredStringFieldValidationRule Length="30" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="11" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="PhoneNr"/>
-                    <TextBox x:Name="ManagementPhoneNrTextBox" Text="{Binding SelectedItem.PhoneNr, ElementName=MembersDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementPhoneNrTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="PhoneNr" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:NullableStringFieldValidationRule Length="15" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
-                <Button x:Name="AddMemberBtn" Content="Add member" Grid.Row="12" Click="AddMemberBtn_Click">                   
+                <Button x:Name="AddMemberBtn" Content="Add member" Grid.Row="12" Click="AddMemberBtn_Click">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Setter Property="IsEnabled" Value="False"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="1">
                                     <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementFederationNrTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementFirstNameTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementLastNameTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementBirthDateDatePicker}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementAddressTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementNumberTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementAdditionTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementZipCodeTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementCityTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementPhoneNrTextBox}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
@@ -237,42 +336,55 @@
                 <Button x:Name="UpdateMemberBtn" Content="Update member" Grid.Row="12" Click="UpdateMemberBtn_Click">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Setter Property="IsEnabled" Value="False"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="0">
                                     <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementFederationNrTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementFirstNameTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementLastNameTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementBirthDateDatePicker}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementAddressTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementNumberTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementAdditionTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementZipCodeTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementCityTextBox}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementPhoneNrTextBox}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
                 </Button>
-
                 <Button x:Name="DeleteMemberBtn" Content="Delete member" Grid.Row="13" Click="DeleteMemberBtn_Click">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="0">
                                     <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
                 </Button>
-
                 <Button x:Name="NewMemberBtn" Content="New member" Grid.Row="14" Click="NewMemberBtn_Click">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="0">
                                     <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
                 </Button>
-
             </Grid>
         </Grid>
         

@@ -16,7 +16,17 @@ namespace Tennisclub_API.Controllers
             _service = service;
         }
 
+        [HttpGet("byroles")]
+        public ActionResult<IEnumerable<MemberRoleReadDto>> GetAllMemberRolesByRoles([FromQuery] List<byte> roles)
+        {
+            return Ok(_service.GetAllMemberRolesByRoles(roles));
+        }
 
+        [HttpGet("bymember/{id}")]
+        public ActionResult<IEnumerable<MemberRoleReadDto>> GetAllMemberRolesByMember(int id)
+        {
+            return Ok(_service.GetAllMemberRolesByMember(id));
+        }
 
         /*private readonly IMemberRoleService _memberRoleService;
 
@@ -74,6 +84,6 @@ namespace Tennisclub_API.Controllers
             _memberRoleService.UpdateMemberRole(id, memberRoleUpdateDto);
 
             return NoContent();
-        } */  
+        } */
     }
 }

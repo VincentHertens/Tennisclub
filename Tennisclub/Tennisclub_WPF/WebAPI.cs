@@ -19,7 +19,8 @@ namespace Tennisclub_WPF
             var url = $"{BaseUrl}{path}";
             var response = await Client.GetAsync(url);
 
-            if (!response.IsSuccessStatusCode) return null;
+            if (!response.IsSuccessStatusCode) 
+                return null;
 
             var json = await response.Content.ReadAsStringAsync();
 
@@ -33,7 +34,8 @@ namespace Tennisclub_WPF
             var url = $"{BaseUrl}{path}";
             var response = await Client.PostAsync(url, new StringContent(JsonConvert.SerializeObject(createDto), Encoding.UTF8, "application/json"));
 
-            if (!response.IsSuccessStatusCode) return null;
+            if (!response.IsSuccessStatusCode) 
+                return null;
 
             var json = await response.Content.ReadAsStringAsync();
 
@@ -47,7 +49,8 @@ namespace Tennisclub_WPF
             var url = $"{BaseUrl}{path}";
             var response = await Client.PutAsync(url, new StringContent(JsonConvert.SerializeObject(updateDto), Encoding.UTF8, "application/json"));
 
-            if (!response.IsSuccessStatusCode) return null;
+            if (!response.IsSuccessStatusCode) 
+                return null;
 
             var json = await response.Content.ReadAsStringAsync();
 

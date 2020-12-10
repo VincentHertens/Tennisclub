@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_WPF\App.xaml
-3-2107220495
+4696168015
 
-141531281249
+19128054780
 1941714854273
-MainWindow.xaml;Views\MemberView.xaml;Views\RoleView.xaml;
+MainWindow.xaml;Views\MemberRoleView.xaml;Views\MemberView.xaml;Views\RoleView.xaml;
 
-True
+False
 

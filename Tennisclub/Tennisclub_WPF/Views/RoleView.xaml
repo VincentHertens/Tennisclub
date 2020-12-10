@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tennisclub_WPF.Views"
+              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:utils="clr-namespace:Tennisclub_WPF.Validations"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1400" Background="#36393f" Foreground="White">
 
@@ -44,6 +46,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <sys:String x:Key="requiredRegex">^\s*$</sys:String>
     </UserControl.Resources>
     
     <Grid>
@@ -59,10 +62,10 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <DataGrid x:Name="RolesDataGrid" ColumnWidth="*"
+        <DataGrid x:Name="RolesDataGrid" ColumnWidth="*" 
             Grid.Row="1" Grid.Column="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
             AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
-            CanUserResizeRows="False" IsReadOnly="True" Background="White">
+            CanUserResizeRows="False" IsReadOnly="True" Background="White" SelectedItem="{Binding Role, Mode=OneWayToSource}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Style.Triggers>
@@ -78,6 +81,7 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
             </DataGrid.Columns>
         </DataGrid>
+       
 
         <Grid x:Name="ManagementGrid" Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
             <Grid.RowDefinitions>
@@ -102,17 +106,33 @@
 
                 <StackPanel Grid.Row="1" Style="{StaticResource managementStackPanelStyle}">
                     <TextBlock Text="Name"/>
-                    <TextBox x:Name="ManagementNameTextBox" Text="{Binding SelectedItem.Name, ElementName=RolesDataGrid, Mode=OneWay}"/>
+                    <TextBox x:Name="ManagementNameTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="Name" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <utils:RequiredStringFieldValidationRule Length="20" Pattern="{StaticResource requiredRegex}" ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </StackPanel>
 
-                <Button x:Name="AddRoleBtn" Content="Add role" Grid.Row="2" Click="AddRoleBtn_Click">
+                <Button x:Name="AddRoleBtn" Content="Add role" Grid.Row="2" Click="AddRoleBtn_Click" Margin="0,20,0,0">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Setter Property="Visibility" Value="Visible"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=RolesDataGrid}" Value="1">
                                     <Setter Property="IsEnabled" Value="False"/>
                                     <Setter Property="Visibility" Value="Hidden"/>
                                 </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementNameTextBox}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
@@ -120,16 +140,22 @@
                 <Button x:Name="UpdateRoleBtn" Content="Update role" Grid.Row="2" Click="UpdateRoleBtn_Click">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                            <Setter Property="IsEnabled" Value="False"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=RolesDataGrid}" Value="0">
                                     <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementNameTextBox}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
                 </Button>
-
                 <Button x:Name="NewRoleBtn" Content="New role" Grid.Row="3" Click="NewRoleBtn_Click">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
