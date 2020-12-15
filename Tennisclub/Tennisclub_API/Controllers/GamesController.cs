@@ -19,10 +19,10 @@ namespace Tennisclub_API.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public IEnumerable<GameReadDto> GetAll([FromQuery] DateTime? date)
+        [HttpGet("bymember/{id}")]
+        public IEnumerable<GameReadDto> GetAllByMember(int id, [FromQuery] DateTime? date)
         {
-            return _service.GetAll(date);
+            return _service.GetAllByMember(id, date);
         }
 
         [HttpPost]

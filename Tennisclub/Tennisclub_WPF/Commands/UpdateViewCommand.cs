@@ -50,10 +50,13 @@ namespace Tennisclub_WPF.Commands
                     viewModel.SelectedViewModel = new MemberRoleViewModel();
                     break;
                 case nameof(Parameters.MemberFines):
+                    viewModel.SelectedViewModel = new MemberFineViewModel();
                     break;
                 case nameof(Parameters.Games):
+                    viewModel.SelectedViewModel = new GameViewModel();
                     break;
                 case nameof(Parameters.GameResults):
+                    viewModel.SelectedViewModel = new GameResultViewModel();
                     break;
                 default:
                     break;

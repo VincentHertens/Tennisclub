@@ -53,7 +53,7 @@ namespace Tennisclub_DAL.Repositories
             return _mapper.Map<IEnumerable<TReadDto>>(query.ToList());
         }
 
-        public TReadDto Add(TCreateDto createDto)
+        public virtual TReadDto Add(TCreateDto createDto)
         {
             TEntity entity = _dbSet.Add(_mapper.Map<TEntity>(createDto)).Entity;
             SaveChanges();

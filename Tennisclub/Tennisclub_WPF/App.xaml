@@ -15,6 +15,15 @@
         <DataTemplate DataType="{x:Type viewmodels:MemberRoleViewModel}">
             <views:MemberRoleView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:MemberFineViewModel}">
+            <views:MemberFineView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:GameViewModel}">
+            <views:GameView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:GameResultViewModel}">
+            <views:GameResultView/>
+        </DataTemplate>
 
         <ControlTemplate x:Key="errorTemplate">
             <StackPanel Orientation="Vertical">

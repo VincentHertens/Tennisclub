@@ -16,10 +16,10 @@ namespace Tennisclub_BL.Services.GameServices
             _repository = repository;
         }
 
-        public IEnumerable<GameReadDto> GetAll(DateTime? date)
+        public IEnumerable<GameReadDto> GetAllByMember(int id, DateTime? date)
         {
-            return _repository.GetAll(filter: game => (game.Date == date || date == null), 
-                orderBy: game => game.OrderBy(x => x.GameNumber), 
+            return _repository.GetAll(filter: game => (game.Date == date || date == null) && game.MemberId == id, 
+                orderBy: game => game.OrderBy(x => x.Date), 
                 x => x.Member, x => x.League);
         }
 

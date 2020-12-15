@@ -7,6 +7,15 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\GameResultView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\GameView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\MemberFineView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\MemberRoleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +28,15 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\GameResultView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\GameView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MemberFineView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MemberRoleView.xaml">

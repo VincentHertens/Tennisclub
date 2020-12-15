@@ -6,4 +6,3 @@ E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_Common\obj\Deb
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_Common\obj\Debug\netcoreapp3.1\Tennisclub_Common.csproj.CoreCompileInputs.cache
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_Common\obj\Debug\netcoreapp3.1\Tennisclub_Common.dll
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_Common\obj\Debug\netcoreapp3.1\Tennisclub_Common.pdb
-E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_Common\obj\Debug\netcoreapp3.1\Tennisclub_Common.csprojAssemblyReference.cache
