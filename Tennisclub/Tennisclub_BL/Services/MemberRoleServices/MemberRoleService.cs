@@ -14,7 +14,7 @@ namespace Tennisclub_BL.Services.MemberRoleServices
         public MemberRoleService(IMemberRoleRepository repository)
         {
             _repository = repository;
-        }
+        }       
 
         public IEnumerable<MemberRoleReadDto> GetAllMemberRolesByMember(int id)
         {
@@ -29,5 +29,20 @@ namespace Tennisclub_BL.Services.MemberRoleServices
                 orderBy: null,
                 x => x.Member, x => x.Role );           
         }
+
+        public MemberRoleReadDto GetById(int id)
+        {
+            return _repository.GetById(id);
+        }
+
+        public MemberRoleReadDto Add(MemberRoleCreateDto memberRoleCreateDto)
+        {
+            return _repository.Add(memberRoleCreateDto);
+        }
+
+        public MemberRoleReadDto Update(MemberRoleUpdateDto memberRoleUpdateDto)
+        {
+            return _repository.Update(memberRoleUpdateDto);
+        }       
     }
 }

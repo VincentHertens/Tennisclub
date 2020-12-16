@@ -50,7 +50,7 @@ namespace Tennisclub_DAL.Repositories
                 query = orderBy(query);
             }
 
-            return _mapper.Map<IEnumerable<TReadDto>>(query.ToList());
+            return _mapper.Map<IEnumerable<TReadDto>>(query.AsNoTracking().ToList());
         }
 
         public virtual TReadDto Add(TCreateDto createDto)

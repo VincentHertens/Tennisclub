@@ -9,5 +9,8 @@ namespace Tennisclub_BL.Services.MemberRoleServices
     {
         public IEnumerable<MemberRoleReadDto> GetAllMemberRolesByRoles(List<byte> roles);
         public IEnumerable<MemberRoleReadDto> GetAllMemberRolesByMember(int id);
+        public MemberRoleReadDto GetById(int id);
+        public MemberRoleReadDto Add(MemberRoleCreateDto memberRoleCreateDto);
+        public MemberRoleReadDto Update(MemberRoleUpdateDto memberRoleUpdateDto);        
     }
 }

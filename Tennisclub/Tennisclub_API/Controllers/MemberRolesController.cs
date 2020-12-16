@@ -28,6 +28,38 @@ namespace Tennisclub_API.Controllers
             return Ok(_service.GetAllMemberRolesByMember(id));
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<MemberRoleReadDto> GetById(int id)
+        {
+            var memberRole = _service.GetById(id);
+            if (memberRole != null)
+            {
+                return Ok(memberRole);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public ActionResult<MemberRoleReadDto> Add(MemberRoleCreateDto memberRoleCreateDto)
+        {
+            if (memberRoleCreateDto == null)
+            {
+                return BadRequest(new { Message = "Member role cannot be empty" });
+            }
+            var memberRole = _service.Add(memberRoleCreateDto);
+            return CreatedAtAction(nameof(GetById), new { Id = memberRole.Id }, memberRole);
+        }
+
+        [HttpPut]
+        public ActionResult<MemberRoleReadDto> Update(MemberRoleUpdateDto memberRoleUpdateDto)
+        {
+            if (memberRoleUpdateDto == null)
+            {
+                return BadRequest(new { Message = "Member role cannot be empty" });
+            }
+            return Ok(_service.Update(memberRoleUpdateDto));
+        }
+
         /*private readonly IMemberRoleService _memberRoleService;
 
         public MemberRolesController(IMemberRoleService memberRoleService)

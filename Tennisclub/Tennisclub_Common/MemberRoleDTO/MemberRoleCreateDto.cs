@@ -10,6 +10,6 @@ namespace Tennisclub_Common.MemberRoleDTO
         public int MemberId { get; set; }
         public byte RoleId { get; set; } //byte
         public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        //public DateTime? EndDate { get; set; }
     }
 }
