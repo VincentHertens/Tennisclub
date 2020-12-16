@@ -19,28 +19,64 @@ namespace Tennisclub_API.Controllers
             _service = service;
         }
 
-        [HttpGet("bymember/{id}")]
-        public IEnumerable<GameReadDto> GetAllByMember(int id, [FromQuery] DateTime? date)
+        [HttpGet("bydate")]
+        public ActionResult<IEnumerable<GameReadDto>> GetAllByDate([FromQuery] DateTime? date)
         {
-            return _service.GetAllByMember(id, date);
+            return Ok(_service.GetAllByDate(date));
+        }
+
+        [HttpGet("bymember/{id}")]
+        public ActionResult<IEnumerable<GameReadDto>> GetAllByMember(int id, [FromQuery] DateTime? date)
+        {
+            return Ok(_service.GetAllByMember(id, date));
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<GameReadDto> GetById(int id)
+        {
+            var game = _service.GetById(id);
+            if (game != null)
+            {
+                return Ok(game);
+            }
+            return NotFound();
         }
 
         [HttpPost]
-        public GameReadDto Add(GameCreateDto gameCreateDto)
+        public ActionResult<GameReadDto> Add(GameCreateDto gameCreateDto)
         {
-            return _service.Add(gameCreateDto);
+            if (gameCreateDto == null)
+            {
+                return BadRequest(new { Message = "Game cannot be empty" });
+            }
+            if (string.IsNullOrEmpty(gameCreateDto.GameNumber))
+            {
+                return BadRequest(new { Message = "GameNumber cannot be empty" });
+            }
+            var game = _service.Add(gameCreateDto);
+            return CreatedAtAction(nameof(GetById), new { Id = game.Id }, game);
         }
 
         [HttpPut]
-        public GameReadDto Update(GameUpdateDto gameUpdateDto)
+        public ActionResult<GameReadDto> Update(GameUpdateDto gameUpdateDto)
         {
-            return _service.Update(gameUpdateDto);
+            if (gameUpdateDto == null)
+            {
+                return BadRequest(new { Message = "Game cannot be empty" });
+            }
+            return Ok(_service.Update(gameUpdateDto));
         }
 
         [HttpDelete("delete/{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var game = _service.GetById(id);
+            if (game == null)
+            {
+                return NotFound();
+            }           
             _service.Delete(id);
+            return NoContent();
         }
 
         /*private readonly IGameService _gameService;      

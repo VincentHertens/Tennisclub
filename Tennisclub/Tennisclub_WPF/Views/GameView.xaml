@@ -10,33 +10,6 @@
              d:DesignHeight="900" d:DesignWidth="1400" Background="#36393f" Foreground="White">
 
     <UserControl.Resources>
-        <!--<Style x:Key="tabItemStyle" TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
-            <Setter Property="Background" Value="#292b2f"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabItem">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="15 4"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True"/>
-                                    <Condition Property="IsSelected" Value="False"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background" Value="#40444b"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </MultiTrigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="White"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
         <Style x:Key="btnStyle" TargetType="{x:Type Button}">
             <Setter Property="Width" Value="auto"/>
             <Setter Property="Height" Value="40"/>
@@ -164,7 +137,7 @@
                     <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
                     <DataGridTextColumn Header="Birth date" Binding="{Binding BirthDate , StringFormat=dd/MM/yyyy}"/>
                     <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}" Width="auto"/>
-                    <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="auto"/>
                     <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
                     <DataGridTextColumn Header="Addition" Binding="{Binding Addition}"/>
                     <DataGridTextColumn Header="Zip code" Binding="{Binding Zipcode}"/>
@@ -275,7 +248,6 @@
 
                     <StackPanel Grid.Row="2" Style="{StaticResource managementStackPanelStyle}">
                         <TextBlock Text="Selected member"/>
-                        <!--<TextBox Text="{Binding Member.FirstName}" IsReadOnly="True" IsEnabled="False"/>-->
                         <TextBox IsReadOnly="True" IsEnabled="False">
                             <TextBox.Text>
                                 <MultiBinding StringFormat="{}{0} {1}">

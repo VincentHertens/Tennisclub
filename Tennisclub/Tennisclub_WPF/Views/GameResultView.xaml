@@ -3,10 +3,455 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:utils="clr-namespace:Tennisclub_WPF.Validations"
              xmlns:local="clr-namespace:Tennisclub_WPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1400" Background="#36393f" Foreground="White">
+
+    <UserControl.Resources>
+        <Style x:Key="tabItemStyle" TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+            <Setter Property="Background" Value="#292b2f"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="15 4"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsSelected" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="Background" Value="#292b2f"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background"  Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background"  Value="#5c6fb1"/>
+                                <Setter Property="Foreground"  Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="managementStackPanelStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="0,15,0,0"/>
+        </Style>
+        <sys:String x:Key="numberRegex">^[0-9]*$</sys:String>
+    </UserControl.Resources>
+    
     <Grid>
-            
+        <TabControl Background="#36393f" BorderThickness="0">
+            <TabItem x:Name="GameResultListTabItem" Header="Game results" Style="{StaticResource tabItemStyle}" Loaded="GameResultListTabItem_Loaded">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--List-->
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="GameResultFilterGrid" Grid.Row="0" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Date" Foreground="White"/>
+                                <DatePicker x:Name="FilterGameResultDateDatePicker" SelectedDateChanged="FilterGameResultDateDatePicker_SelectedDateChanged"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid x:Name="MemberFilterGrid" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="FederationNr" Foreground="White"/>
+                                <TextBox x:Name="FilterFederationNrTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="First name" Foreground="White"/>
+                                <TextBox x:Name="FilterFirstnameTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                                <TextBlock Text="Last name" Foreground="White"/>
+                                <TextBox x:Name="FilterLastnameTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                                <TextBlock Text="ZIP code" Foreground="White"/>
+                                <TextBox x:Name="FilterZipcodeTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="4" Margin="0,0,10,0">
+                                <TextBlock Text="City" Foreground="White"/>
+                                <TextBox x:Name="FilterCityTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <DataGrid x:Name="MembersDataGrid" ColumnWidth="*"
+                Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+                AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+                CanUserResizeRows="False" IsReadOnly="True" Background="White" SelectedItem="{Binding Member}">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#5c6fb1"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="FederationNr" Binding="{Binding FederationNr}" Width="auto"/>
+                                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}"/>
+                                <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
+                                <DataGridTextColumn Header="Birth date" Binding="{Binding BirthDate , StringFormat=dd/MM/yyyy}"/>
+                                <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}" Width="auto"/>
+                                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="auto"/>
+                                <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+                                <DataGridTextColumn Header="Addition" Binding="{Binding Addition}"/>
+                                <DataGridTextColumn Header="Zip code" Binding="{Binding Zipcode}"/>
+                                <DataGridTextColumn Header="City" Binding="{Binding City}"/>
+                                <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <DataGrid x:Name="GameResultsDataGrid" ColumnWidth="*" Visibility="Collapsed"
+                         Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+                         AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+                         CanUserResizeRows="False" IsReadOnly="True" Background="White" SelectedItem="{Binding GameResult}">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#5c6fb1"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Game number" Binding="{Binding Game.GameNumber}" Width="auto"/>
+                                <DataGridTextColumn Header="SetNr" Binding="{Binding SetNr}" Width="auto"/>
+                                <DataGridTextColumn Header="Teammember score" Binding="{Binding ScoreTeamMember}"/>
+                                <DataGridTextColumn Header="Opponent score" Binding="{Binding ScoreOpponent}"/>
+                                <DataGridTextColumn Header="Date" Binding="{Binding Game.Date , StringFormat=dd/MM/yyyy}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+
+                    <!-- Create, update, delete -->
+                    <Grid  x:Name="ManagementGrid" Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="35"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid  Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Management" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="White"/>
+
+                            <Grid x:Name="ViewGameResultsGrid" Grid.Row="1">
+                                <Button x:Name="ViewGameResultsBtn" Content="View games results" Click="ViewGameResultsBtn_Click" >
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="0">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+
+                            <Grid x:Name="ManageGameResultsGrid" Grid.Row="1" Visibility="Collapsed">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="Teammember score" Foreground="White"/>
+                                    <TextBox x:Name="ManagementGameResultTeamMemberScoreTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="ScoreTeamMember" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:NumberValidationRule Pattern="{StaticResource numberRegex}" ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="Opponents score" Foreground="White"/>
+                                    <TextBox x:Name="ManagementGameResultOpponentsScoreTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="ScoreOpponent" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:NumberValidationRule Pattern="{StaticResource numberRegex}" ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+
+                                <Button x:Name="UpdateGameResultBtn" Content="Update game result" Grid.Row="2" Click="UpdateGameResultBtn_Click" Margin="0,20,0,0">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementGameResultTeamMemberScoreTextBox}" Value="False"/>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ManagementGameResultOpponentsScoreTextBox}" Value="False"/>
+                                                        <Condition Binding="{Binding SelectedItems.Count, ElementName=GameResultsDataGrid}" Value="1"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <Button x:Name="BackToMembersBtn" Content="Go back to members" Grid.Row="3" Style="{StaticResource btnStyle}" Click="BackToMembersBtn_Click" />
+
+                            </Grid>
+
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="AddGameResultTabItem" Header="Add game result" Style="{StaticResource tabItemStyle}" Loaded="AddGameResultTabItem_Loaded">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--List-->
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="GameFilterGrid" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Date" Foreground="White"/>
+                                <DatePicker x:Name="FilterGameDateDatePicker" SelectedDateChanged="FilterGameDateDatePicker_SelectedDateChanged"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <DataGrid x:Name="GamesDataGrid" ColumnWidth="*"
+                        Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+                        AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+                        CanUserResizeRows="False" IsReadOnly="True" Background="White" SelectedItem="{Binding Game}">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#5c6fb1"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Game number" Binding="{Binding GameNumber}" Width="auto"/>
+                                <DataGridTextColumn Header="FederationNr" Binding="{Binding Member.FederationNr}" Width="auto"/>
+                                <DataGridTextColumn Header="First name" Binding="{Binding Member.FirstName}"/>
+                                <DataGridTextColumn Header="Last name" Binding="{Binding Member.LastName}"/>
+                                <DataGridTextColumn Header="League" Binding="{Binding League.Name}"/>
+                                <DataGridTextColumn Header="Date" Binding="{Binding Date , StringFormat=dd/MM/yyyy}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                    <!-- Create, update, delete -->
+                    <Grid x:Name="AddGameResultGrid" Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="35"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Add game result" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="White"/>
+
+                            <Grid Grid.Row="1" Name="AddGameGrid">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="SetNr" Foreground="White"/>
+                                    <TextBox x:Name="AddGameResultSetNrTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="AddSetNr" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:NumberValidationRule Pattern="{StaticResource numberRegex}" ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Row="1" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="Teammember score" Foreground="White"/>
+                                    <TextBox x:Name="AddGameResultTeamMemberScoreTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="AddScoreTeamMember" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:NumberValidationRule Pattern="{StaticResource numberRegex}" ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="Opponents score" Foreground="White"/>
+                                    <TextBox x:Name="AddGameResultOpponentsScoreTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="AddScoreOpponent" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:NumberValidationRule Pattern="{StaticResource numberRegex}" ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+
+                                <Button x:Name="AddGameResultBtn" Content="Add game result" Grid.Row="3" Click="AddGameResultBtn_Click" Margin="0,20,0,0">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddGameResultSetNrTextBox}" Value="False"/>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddGameResultTeamMemberScoreTextBox}" Value="False"/>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddGameResultOpponentsScoreTextBox}" Value="False"/>
+                                                        <Condition Binding="{Binding SelectedItems.Count, ElementName=GamesDataGrid}" Value="1"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                            </Grid>
+                            
+                        </Grid>
+                        
+                    </Grid>
+                    
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

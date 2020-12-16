@@ -125,7 +125,7 @@
                     <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
                     <DataGridTextColumn Header="Birth date" Binding="{Binding BirthDate , StringFormat=dd/MM/yyyy}"/>
                     <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}" Width="auto"/>
-                    <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="auto"/>
                     <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
                     <DataGridTextColumn Header="Addition" Binding="{Binding Addition}"/>
                     <DataGridTextColumn Header="Zip code" Binding="{Binding Zipcode}"/>
@@ -149,7 +149,7 @@
                 <ColumnDefinition Width="35"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="1" Grid.Column="1">
+            <Grid Grid.Row="1" Grid.Column="1" x:Name="AddMemberGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>

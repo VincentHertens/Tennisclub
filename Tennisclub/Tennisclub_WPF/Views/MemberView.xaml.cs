@@ -132,6 +132,7 @@ namespace Tennisclub_WPF.Views
         private void AddMemberBtn_Click(object sender, RoutedEventArgs e)
         {
             _ = AddMember();
+            ControlManager.LoopVisualTree(AddMemberGrid, null);
         }
     }
 }

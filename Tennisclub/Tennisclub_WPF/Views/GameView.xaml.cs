@@ -139,14 +139,6 @@ namespace Tennisclub_WPF.Views
         private void BackToMembersBtn_Click(object sender, RoutedEventArgs e)
         {
             Reset(true);
-            //ViewGamesGrid.Visibility = Visibility.Visible;
-            //MembersDataGrid.Visibility = Visibility.Visible;
-            //MemberFilterGrid.Visibility = Visibility.Visible;
-
-            //ManageGamesGrid.Visibility = Visibility.Collapsed;
-            //GamesDataGrid.Visibility = Visibility.Collapsed;
-            //GameFilterGrid.Visibility = Visibility.Collapsed;
-            //FilterDateDatePicker.SelectedDate = null;
         }
 
         private void OnEnterHandler(object sender, KeyEventArgs e)
