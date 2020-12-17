@@ -3,6 +3,7 @@ using Tennisclub_Common.MemberDTO;
 using Tennisclub_DAL.Models;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tennisclub_DAL.Repositories.MemberRepositories
 {
@@ -19,8 +20,17 @@ namespace Tennisclub_DAL.Repositories.MemberRepositories
             SaveChanges();        
         }
 
-        public override MemberReadDto Update(MemberUpdateDto updateDto)
+        public override MemberReadDto Add(MemberCreateDto createDto)
         {
+            Validate(createDto.GenderId);
+
+            return base.Add(createDto);
+        }
+
+        public override MemberReadDto Update(MemberUpdateDto updateDto)
+        {              
+            Validate(updateDto.GenderId);
+
             var entry = _context.Entry(_mapper.Map<Member>(updateDto));
             entry.Property(x => x.FederationNr).IsModified = true;
             entry.Property(x => x.FirstName).IsModified = true;
@@ -33,9 +43,17 @@ namespace Tennisclub_DAL.Repositories.MemberRepositories
             entry.Property(x => x.Zipcode).IsModified = true;
             entry.Property(x => x.City).IsModified = true;
             entry.Property(x => x.PhoneNr).IsModified = true;
-            
+
             SaveChanges();
             return GetById(updateDto.Id);
+        }
+
+        private void Validate(byte genderId)
+        {
+            var gender = _context.Set<Gender>().Find(genderId);
+
+            if (gender == null)
+                throw new NullReferenceException("No gender with this id has been found");
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Tennisclub_Common.GenderDTO;
 
 namespace Tennisclub_Common.MemberDTO
@@ -20,5 +17,6 @@ namespace Tennisclub_Common.MemberDTO
         public string Zipcode { get; set; }
         public string City { get; set; }
         public string PhoneNr { get; set; }
+        public bool Active { get; set; }
     }
 }

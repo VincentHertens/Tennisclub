@@ -24,7 +24,7 @@ namespace Tennisclub_API
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddRepositories();
+            services.SetupRepositories();
             services.AddServices();           
         }
 

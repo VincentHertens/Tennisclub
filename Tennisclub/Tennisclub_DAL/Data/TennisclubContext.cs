@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using Tennisclub_DAL.Configurations;
 using Tennisclub_DAL.Models;
 

@@ -26,9 +26,9 @@ namespace Tennisclub_BL
             return services;
         }
 
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        public static IServiceCollection SetupRepositories(this IServiceCollection services)
         {
-            services.AddRepositories2();
+            services.AddRepositories();
             return services;
         }
 

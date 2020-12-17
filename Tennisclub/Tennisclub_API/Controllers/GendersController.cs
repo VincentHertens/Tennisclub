@@ -20,32 +20,6 @@ namespace Tennisclub_API.Controllers
         public IEnumerable<GenderReadDto> GetAll()
         {
             return _service.GetAll();
-        }
-
-        /*private readonly IGenderService _genderService;
-
-        public GendersController(IGenderService genderService)
-        {
-            _genderService = genderService;
-        }
-
-        //GET: Get all genders
-        [HttpGet]
-        public ActionResult<IEnumerable<GenderReadDto>> GetAllGenders()
-        {
-            return Ok(_genderService.GetAllGenders());
-        }
-
-        //GET: Get gender by id
-        [HttpGet("{id}", Name = "GetGenderById")]
-        public ActionResult<GenderReadDto> GetGenderById(byte id)
-        {
-            var gender = _genderService.GetGenderById(id);
-            if (gender != null)
-            {
-                return Ok(gender);
-            }
-            return NotFound();
-        }*/
+        }        
     }
 }

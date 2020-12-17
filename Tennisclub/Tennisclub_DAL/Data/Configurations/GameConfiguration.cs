@@ -12,20 +12,20 @@ namespace Tennisclub_DAL.Configurations
         public GameConfiguration()
         {
             CreateMap<Game, GameReadDto>();
-
             CreateMap<GameCreateDto, Game>();
-
             CreateMap<GameUpdateDto, Game>();
         }
 
         public void Configure(EntityTypeBuilder<Game> g)
         {
-            g.HasKey(c => c.Id);
+            g.Property(c => c.Id).ValueGeneratedOnAdd();
             g.Property(c => c.GameNumber).HasColumnType("varchar(10)").IsRequired();
             g.Property(c => c.Date).HasColumnType("date").IsRequired();
-            g.HasIndex(c => c.GameNumber).IsUnique();
             g.HasOne(c => c.Member).WithMany().HasForeignKey(s => s.MemberId).IsRequired();
             g.HasOne(c => c.League).WithMany().HasForeignKey(s => s.LeagueId).IsRequired();
+
+            g.HasKey(c => c.Id);
+            g.HasIndex(c => c.GameNumber).IsUnique();
         }
     }
 }

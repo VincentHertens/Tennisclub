@@ -5717,8 +5717,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.1.0",
-      "Tennisclub_BL >= 1.0.0",
-      "Tennisclub_DAL >= 1.0.0"
+      "Tennisclub_BL >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5753,9 +5752,6 @@
           "projectReferences": {
             "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_BL\\Tennisclub_BL.csproj": {
               "projectPath": "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_BL\\Tennisclub_BL.csproj"
-            },
-            "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_DAL\\Tennisclub_DAL.csproj": {
-              "projectPath": "E:\\School 2020\\Programmeren in .NET\\Backend\\Tennisclub\\Tennisclub_DAL\\Tennisclub_DAL.csproj"
             }
           }
         }

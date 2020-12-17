@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Tennisclub_Common.MemberDTO;
-using Tennisclub_DAL.Models;
-using Tennisclub_DAL.Repositories;
 using Tennisclub_DAL.Repositories.GameRepositories;
 using Tennisclub_DAL.Repositories.GameResultRepositories;
 using Tennisclub_DAL.Repositories.GenderRepositories;
@@ -16,7 +13,7 @@ namespace Tennisclub_DAL
 {
     public static class DALExtension
     { 
-        public static IServiceCollection AddRepositories2(this IServiceCollection services)
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<IMemberRepository, MemberRepository>();
             services.AddTransient<IGenderRepository, GenderRepository>();

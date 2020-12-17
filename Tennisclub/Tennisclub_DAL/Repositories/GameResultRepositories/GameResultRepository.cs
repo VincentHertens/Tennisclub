@@ -12,6 +12,14 @@ namespace Tennisclub_DAL.Repositories.GameResultRepositories
         public GameResultRepository(TennisclubContext context, IMapper mapper) : base(context, mapper)
         { }
 
+        public override GameResultReadDto Add(GameResultCreateDto createDto)
+        {
+            var game = _context.Set<Game>().Find(createDto.GameId);
 
+            if (game == null)
+                throw new NullReferenceException("No game with this id has been found");
+
+            return base.Add(createDto);
+        }
     }
 }

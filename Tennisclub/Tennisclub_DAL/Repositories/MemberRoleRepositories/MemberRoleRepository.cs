@@ -13,21 +13,27 @@ namespace Tennisclub_DAL.Repositories.MemberRoleRepositories
         public MemberRoleRepository(TennisclubContext context, IMapper mapper) : base(context, mapper)
         { }
 
+        public override MemberRoleReadDto Add(MemberRoleCreateDto createDto)
+        {
+            var member = _context.Set<Member>().Find(createDto.MemberId);
+            var role = _context.Set<Role>().Find(createDto.RoleId);
+
+            if (member == null)
+                throw new NullReferenceException("No member with this id has been found");
+
+            if (role == null)
+                throw new NullReferenceException("No role with this id has been found");
+
+            return base.Add(createDto);
+        }
+
         public override MemberRoleReadDto Update(MemberRoleUpdateDto updateDto)
         {
-            var memberRole = _dbSet.Find(updateDto.Id);
-            if (memberRole != null && memberRole.EndDate == null)
-            {
-                if (updateDto.EndDate >= memberRole.StartDate)
-                {
-                    memberRole.EndDate = updateDto.EndDate;
-                    _dbSet.Update(memberRole);
-                    SaveChanges();
-                }
-                return null;               
-            }
-            //TODO: Error geven als al ingevuld
-            return null;
+            var memberRole = _dbSet.Find(updateDto.Id);          
+            memberRole.EndDate = updateDto.EndDate;
+            _dbSet.Update(memberRole);
+            SaveChanges();
+            return GetById(memberRole.Id);
         }
     }
 }

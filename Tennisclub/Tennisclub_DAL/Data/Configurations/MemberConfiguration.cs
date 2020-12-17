@@ -17,7 +17,7 @@ namespace Tennisclub_DAL.Configurations
 
         public void Configure(EntityTypeBuilder<Member> m)
         {
-            m.HasKey(c => c.Id);
+            m.Property(c => c.Id).ValueGeneratedOnAdd();
             m.Property(c => c.FederationNr).HasColumnType("varchar(10)").IsRequired();
             m.Property(c => c.FirstName).HasColumnType("varchar(25)").IsRequired();
             m.Property(c => c.LastName).HasColumnType("varchar(35)").IsRequired();
@@ -28,10 +28,9 @@ namespace Tennisclub_DAL.Configurations
             m.Property(c => c.Zipcode).HasColumnType("varchar(6)").IsRequired();
             m.Property(c => c.City).HasColumnType("varchar(30)").IsRequired();
             m.Property(c => c.PhoneNr).HasColumnType("varchar(15)");
-
-            //Test
             m.Property(c => c.Active).HasColumnType("bit").IsRequired().HasDefaultValue(true);
 
+            m.HasKey(c => c.Id);
             m.HasIndex(c => c.FederationNr).IsUnique();
             m.HasOne(c => c.Gender).WithMany().HasForeignKey(s => s.GenderId).IsRequired();
         }

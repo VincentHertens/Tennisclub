@@ -10,8 +10,6 @@ namespace Tennisclub_DAL.Repositories.LeagueRepositories
     public class LeagueRepository : GenericRepository<League, LeagueReadDto, object, object, byte>, ILeagueRepository
     {
         public LeagueRepository(TennisclubContext context, IMapper mapper) : base(context, mapper)
-        {
-
-        }
+        { }
     }
 }

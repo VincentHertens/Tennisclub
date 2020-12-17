@@ -79,8 +79,6 @@ namespace Tennisclub_WPF.Views
                 GameResultUpdateDto gameResultToUpdate = new GameResultUpdateDto
                 {
                     Id = gameResult.Id,
-                    GameId = gameResult.Game.Id,
-                    SetNr = gameResult.SetNr,
                     ScoreOpponent = Convert.ToByte(ManagementGameResultOpponentsScoreTextBox.Text),
                     ScoreTeamMember = Convert.ToByte(ManagementGameResultTeamMemberScoreTextBox.Text),
                 };

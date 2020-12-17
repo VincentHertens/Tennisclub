@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Tennisclub_Common.MemberDTO;
 using Tennisclub_Common.RoleDTO;
 
@@ -14,5 +11,8 @@ namespace Tennisclub_Common.MemberRoleDTO
         public RoleReadDto Role { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+
+        public int MemberId { get; set; }
+        public byte RoleId { get; set; }
     }
 }

@@ -16,9 +16,10 @@ namespace Tennisclub_DAL.Configurations
 
         public void Configure(EntityTypeBuilder<League> l)
         {
-            l.HasKey(c => c.Id);
-            l.Property(c => c.Id).ValueGeneratedOnAdd(); //Voorlopige oplossing
+            l.Property(c => c.Id).ValueGeneratedOnAdd();
             l.Property(c => c.Name).HasColumnType("varchar(20)").IsRequired();
+
+            l.HasKey(c => c.Id);
             l.HasIndex(c => c.Name).IsUnique();
 
             l.HasData(

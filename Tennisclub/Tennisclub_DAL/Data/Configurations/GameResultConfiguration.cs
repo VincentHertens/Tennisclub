@@ -12,20 +12,20 @@ namespace Tennisclub_DAL.Configurations
         public GameResultConfiguration()
         {
             CreateMap<GameResult, GameResultReadDto>();
-
             CreateMap<GameResultCreateDto, GameResult>();
-
             CreateMap<GameResultUpdateDto, GameResult>();
         }
 
         public void Configure(EntityTypeBuilder<GameResult> g)
         {
-            g.HasKey(c => c.Id);
+            g.Property(c => c.Id).ValueGeneratedOnAdd();
             g.Property(c => c.SetNr).HasColumnType("tinyint").IsRequired();
             g.Property(c => c.ScoreTeamMember).HasColumnType("tinyint").IsRequired();
             g.Property(c => c.ScoreOpponent).HasColumnType("tinyint").IsRequired();
-            g.HasIndex(c => new { c.SetNr, c.GameId}).IsUnique();
             g.HasOne(c => c.Game).WithMany().HasForeignKey(s => s.GameId).IsRequired();
+
+            g.HasKey(c => c.Id);
+            g.HasIndex(c => new { c.SetNr, c.GameId }).IsUnique();
         }
     }
 }
