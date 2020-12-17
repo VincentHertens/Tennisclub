@@ -137,7 +137,7 @@
                                 <DataGridTextColumn Header="FederationNr" Binding="{Binding Member.FederationNr}" Width="auto"/>
                                 <DataGridTextColumn Header="First name" Binding="{Binding Member.FirstName}"/>
                                 <DataGridTextColumn Header="Last name" Binding="{Binding Member.LastName}"/>
-                                <DataGridTextColumn Header="Name" Binding="{Binding Role.Name}"/>
+                                <DataGridTextColumn Header="Role" Binding="{Binding Role.Name}"/>
                                 <DataGridTextColumn Header="Start date" Binding="{Binding StartDate , StringFormat=dd/MM/yyyy}"/>
                                 <DataGridTextColumn Header="End date" Binding="{Binding EndDate , StringFormat=dd/MM/yyyy}"/>
                             </DataGrid.Columns>
@@ -218,15 +218,197 @@
 
                                 <Button x:Name="BackToRolesBtn" Content="Go back to roles" Grid.Row="2" Style="{StaticResource btnStyle}" Click="BackToRolesBtn_Click"/>
                             </Grid>
-
                         </Grid>
                     </Grid>
 
                 </Grid>
             </TabItem>
-            <TabItem Header="List of roles" Style="{StaticResource tabItemStyle}">
+            <TabItem Header="List of roles" Style="{StaticResource tabItemStyle}" Loaded="TabItem_Loaded_2">
                 <Grid>
-                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--List-->
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" x:Name="FilterMembersGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="FederationNr" Foreground="White"/>
+                                <TextBox x:Name="FilterFederationNrTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="First name" Foreground="White"/>
+                                <TextBox x:Name="FilterFirstnameTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                                <TextBlock Text="Last name" Foreground="White"/>
+                                <TextBox x:Name="FilterLastnameTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                                <TextBlock Text="ZIP code" Foreground="White"/>
+                                <TextBox x:Name="FilterZipcodeTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="4" Margin="0,0,10,0">
+                                <TextBlock Text="City" Foreground="White"/>
+                                <TextBox x:Name="FilterCityTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+                        </Grid>
+                        
+                        <DataGrid x:Name="MembersDataGrid" ColumnWidth="*"
+                        Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+                        AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+                        CanUserResizeRows="False" IsReadOnly="True" Background="White">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#5c6fb1"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="FederationNr" Binding="{Binding FederationNr}" Width="auto"/>
+                                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}"/>
+                                <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
+                                <DataGridTextColumn Header="Birth date" Binding="{Binding BirthDate , StringFormat=dd/MM/yyyy}"/>
+                                <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}" Width="auto"/>
+                                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="auto"/>
+                                <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+                                <DataGridTextColumn Header="Addition" Binding="{Binding Addition}"/>
+                                <DataGridTextColumn Header="Zip code" Binding="{Binding Zipcode}"/>
+                                <DataGridTextColumn Header="City" Binding="{Binding City}"/>
+                                <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <DataGrid x:Name="RolesListDataGrid" ColumnWidth="*" Visibility="Collapsed"
+                        Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+                        AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+                        CanUserResizeRows="False" IsReadOnly="True" Background="White">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#5c6fb1"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Role" Binding="{Binding Role.Name}"/>
+                                <DataGridTextColumn Header="Start date" Binding="{Binding StartDate , StringFormat=dd/MM/yyyy}"/>
+                                <DataGridTextColumn Header="End date" Binding="{Binding EndDate , StringFormat=dd/MM/yyyy}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                    <!-- Create, update, delete -->
+                    <Grid  Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="35"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Management" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="White"/>
+
+                            <Grid x:Name="ViewRoleListGrid" Grid.Row="1">
+                                <Button x:Name="ViewMemberRolesBtn2" Content="View member roles" Click="ViewMemberRolesBtn2_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="0">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+
+                            <Grid x:Name="ManageRoleListGrid" Grid.Row="1" Visibility="Collapsed">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="End date" Foreground="White"/>
+                                    <DatePicker x:Name="UpdateEndDateRoleDatePicker" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <DatePicker.SelectedDate>
+                                            <Binding Path="UpdateMemberEndDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:DateTimeValidationRule ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DatePicker.SelectedDate>
+                                    </DatePicker>
+                                </StackPanel>
+
+                                <Button x:Name="UpdateRoleListBtn" Content="End member role" Grid.Row="1" Margin="0,20,0,0" Click="UpdateRoleListBtn_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdateEndDateRoleDatePicker}" Value="False"/>
+                                                        <Condition Binding="{Binding SelectedItems.Count, ElementName=RolesListDataGrid}" Value="1"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <Button x:Name="BackToMembersBtn" Content="Go back to members" Grid.Row="2" Style="{StaticResource btnStyle}" Click="BackToMembersBtn_Click"/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Add member role" Style="{StaticResource tabItemStyle}" Loaded="TabItem_Loaded">
@@ -335,7 +517,7 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Text="Management" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Grid.Row="0" Text="Add a member role" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="White"/>
 
                             <Grid x:Name="AddMemberRoleGrid" Grid.Row="1">
                                 <Grid.RowDefinitions>

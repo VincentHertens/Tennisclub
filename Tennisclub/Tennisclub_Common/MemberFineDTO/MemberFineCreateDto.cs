@@ -11,6 +11,6 @@ namespace Tennisclub_Common.MemberFineDTO
         public int MemberId { get; set; }
         public decimal Amount { get; set; }
         public DateTime HandoutDate { get; set; }
-        public DateTime? PaymentDate { get; set; }
+        //public DateTime? PaymentDate { get; set; }
     }
 }

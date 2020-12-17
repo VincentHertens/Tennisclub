@@ -4,9 +4,461 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tennisclub_WPF.Views"
+              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:utils="clr-namespace:Tennisclub_WPF.Validations"
              mc:Ignorable="d" 
             d:DesignHeight="900" d:DesignWidth="1400" Background="#36393f" Foreground="White">
+
+    <UserControl.Resources>
+        <Style x:Key="tabItemStyle" TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+            <Setter Property="Background" Value="#292b2f"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="15 4"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsSelected" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="Background" Value="#292b2f"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background"  Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background"  Value="#5c6fb1"/>
+                                <Setter Property="Foreground"  Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#40444b"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="managementStackPanelStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="0,15,0,0"/>
+        </Style>
+        <sys:String x:Key="numberRegex">^[0-9]*$</sys:String>
+        <sys:String x:Key="decimalRegex">^[0-9]{1,5}([,][0-9]{1,2})?$</sys:String>
+    </UserControl.Resources>
+    
     <Grid>
-            
+        <TabControl Background="#36393f" BorderThickness="0">
+            <TabItem x:Name="ListFineTabItem" Header="List of fines" Style="{StaticResource tabItemStyle}" Loaded="ListFineTabItem_Loaded">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="ListFilterGrid" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="FederationNr" Foreground="White"/>
+                                <TextBox x:Name="FilterFederationNrTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="First name" Foreground="White"/>
+                                <TextBox x:Name="FilterFirstnameTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                                <TextBlock Text="Last name" Foreground="White"/>
+                                <TextBox x:Name="FilterLastnameTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                                <TextBlock Text="ZIP code" Foreground="White"/>
+                                <TextBox x:Name="FilterZipcodeTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="4" Margin="0,0,10,0">
+                                <TextBlock Text="City" Foreground="White"/>
+                                <TextBox x:Name="FilterCityTextBox" KeyDown="OnEnterHandler"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid x:Name="FineFilterGrid" Grid.Row="0" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Handout date" Foreground="White"/>
+                                <DatePicker x:Name="FilterHandoutDateDatePicker" SelectedDateChanged="FilterHandoutDateDatePicker_SelectedDateChanged" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="Payment date" Foreground="White"/>
+                                <DatePicker x:Name="FilterPaymentDateDatePicker" SelectedDateChanged="FilterPaymentDateDatePicker_SelectedDateChanged"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <DataGrid x:Name="MembersDataGrid" ColumnWidth="*"
+                        Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+                        AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+                        CanUserResizeRows="False" IsReadOnly="True" Background="White">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#5c6fb1"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="FederationNr" Binding="{Binding FederationNr}" Width="auto"/>
+                                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}"/>
+                                <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
+                                <DataGridTextColumn Header="Birth date" Binding="{Binding BirthDate , StringFormat=dd/MM/yyyy}"/>
+                                <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}" Width="auto"/>
+                                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="auto"/>
+                                <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+                                <DataGridTextColumn Header="Addition" Binding="{Binding Addition}"/>
+                                <DataGridTextColumn Header="Zip code" Binding="{Binding Zipcode}"/>
+                                <DataGridTextColumn Header="City" Binding="{Binding City}"/>
+                                <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <DataGrid x:Name="MemberFinesDataGrid" ColumnWidth="*" Visibility="Collapsed"
+                        Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+                        AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+                        CanUserResizeRows="False" IsReadOnly="True" Background="White">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#5c6fb1"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Fine number" Binding="{Binding FineNumber}" Width="auto"/>
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
+                                <DataGridTextColumn Header="Handout date" Binding="{Binding HandoutDate , StringFormat=dd/MM/yyyy}"/>
+                                <DataGridTextColumn Header="Payment date" Binding="{Binding PaymentDate , StringFormat=dd/MM/yyyy}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="35"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Update fine" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="White"/>
+
+                            <Grid x:Name="ViewMemberFinesGrid" Grid.Row="1">
+                                <Button x:Name="ViewMemberFinesBtn" Content="View fines" Click="ViewMemberFinesBtn_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedItems.Count, ElementName=MembersDataGrid}" Value="0">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+
+                            <Grid x:Name="ManageMemberFinesGrid" Grid.Row="1" Visibility="Collapsed">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="Payment date" Foreground="White"/>
+                                    <DatePicker x:Name="UpdatePaymentDateDatePicker" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <DatePicker.SelectedDate>
+                                            <Binding Path="PaymentDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:DateTimeValidationRule ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DatePicker.SelectedDate>
+                                    </DatePicker>
+                                </StackPanel>
+
+                                <Button x:Name="UpdateMemberFineBtn" Content="Update fine" Grid.Row="1" Margin="0,20,0,0" Click="UpdateMemberFineBtn_Click" >
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UpdatePaymentDateDatePicker}" Value="False"/>
+                                                        <Condition Binding="{Binding SelectedItems.Count, ElementName=MemberFinesDataGrid}" Value="1"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <Button x:Name="BackToMembersBtn" Content="Go back to members" Grid.Row="2" Style="{StaticResource btnStyle}" Click="BackToMembersBtn_Click"/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="AddFineTabItem" Header="Add fine" Style="{StaticResource tabItemStyle}" Loaded="AddFineTabItem_Loaded">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="AddFilterGrid" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="FederationNr" Foreground="White"/>
+                                <TextBox x:Name="AddFilterFederationNrTextBox" KeyDown="AddOnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="First name" Foreground="White"/>
+                                <TextBox x:Name="AddFilterFirstnameTextBox" KeyDown="AddOnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                                <TextBlock Text="Last name" Foreground="White"/>
+                                <TextBox x:Name="AddFilterLastnameTextBox" KeyDown="AddOnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                                <TextBlock Text="ZIP code" Foreground="White"/>
+                                <TextBox x:Name="AddFilterZipcodeTextBox" KeyDown="AddOnEnterHandler"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="4" Margin="0,0,10,0">
+                                <TextBlock Text="City" Foreground="White"/>
+                                <TextBox x:Name="AddFilterCityTextBox" KeyDown="AddOnEnterHandler"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <DataGrid x:Name="AddDataGrid" ColumnWidth="*"
+                        Grid.Row="1" Margin="0,15,10,10" GridLinesVisibility="None" CanUserAddRows="False"
+                        AutoGenerateColumns="False" BorderThickness="0" SelectionMode="Single" HeadersVisibility="Column"
+                        CanUserResizeRows="False" IsReadOnly="True" Background="White">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#5c6fb1"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="FederationNr" Binding="{Binding FederationNr}" Width="auto"/>
+                                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}"/>
+                                <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
+                                <DataGridTextColumn Header="Birth date" Binding="{Binding BirthDate , StringFormat=dd/MM/yyyy}"/>
+                                <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}" Width="auto"/>
+                                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="auto"/>
+                                <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+                                <DataGridTextColumn Header="Addition" Binding="{Binding Addition}"/>
+                                <DataGridTextColumn Header="Zip code" Binding="{Binding Zipcode}"/>
+                                <DataGridTextColumn Header="City" Binding="{Binding City}"/>
+                                <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="35"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Add a fine" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="White"/>
+
+                            <Grid x:Name="AddFineGrid" Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="Fine number" Foreground="White"/>
+                                    <TextBox x:Name="AddFineNumberTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="FineNumber" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:NumberValidationRule Pattern="{StaticResource numberRegex}" ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="Amount" Foreground="White"/>
+                                    <TextBox x:Name="AddAmountTextBox" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="Amount" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:NumberValidationRule Pattern="{StaticResource decimalRegex}" ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Style="{StaticResource managementStackPanelStyle}">
+                                    <TextBlock Text="Handout date" Foreground="White"/>
+                                    <DatePicker x:Name="AddHandoutDateDatePicker" Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                                        <DatePicker.SelectedDate>
+                                            <Binding Path="HandoutDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <utils:DateTimeValidationRule ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DatePicker.SelectedDate>
+                                    </DatePicker>
+                                </StackPanel>
+
+                                <Button x:Name="AddFineBtn" Content="Add fine" Grid.Row="3" Click="AddFineBtn_Click" Margin="0,20,0,0">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddFineNumberTextBox}" Value="False"/>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddAmountTextBox}" Value="False"/>
+                                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddHandoutDateDatePicker}" Value="False"/>
+                                                        <Condition Binding="{Binding SelectedItems.Count, ElementName=AddDataGrid}" Value="1"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

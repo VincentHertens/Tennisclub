@@ -53,33 +53,45 @@ namespace Tennisclub_WPF.Views
         private async Task AddGameResult()
         {
             //TODO: Validation
-            GameReadDto game = GamesDataGrid.SelectedItem as GameReadDto;
-            GameResultCreateDto gameResult = new GameResultCreateDto
+            if (GamesDataGrid.SelectedItem is GameReadDto game)
             {
-                GameId = game.Id,
-                ScoreOpponent = Convert.ToByte(AddGameResultOpponentsScoreTextBox.Text),
-                ScoreTeamMember = Convert.ToByte(AddGameResultTeamMemberScoreTextBox.Text),
-                SetNr = Convert.ToByte(AddGameResultSetNrTextBox.Text)
-            };
+                GameResultCreateDto gameResult = new GameResultCreateDto
+                {
+                    GameId = game.Id,
+                    ScoreOpponent = Convert.ToByte(AddGameResultOpponentsScoreTextBox.Text),
+                    ScoreTeamMember = Convert.ToByte(AddGameResultTeamMemberScoreTextBox.Text),
+                    SetNr = Convert.ToByte(AddGameResultSetNrTextBox.Text)
+                };
 
-            await WebAPI.Post<GameResultReadDto, GameResultCreateDto>($"gameresults", gameResult);
+                await WebAPI.Post<GameResultReadDto, GameResultCreateDto>($"gameresults", gameResult);
+            }
+            else
+            {
+                MessageBox.Show("Please select a game");
+            }
         }
 
         private async Task UpdateGameResult()
         {
-            //TODO: Validation
-            GameResultReadDto gameResult = GameResultsDataGrid.SelectedItem as GameResultReadDto;
-            GameResultUpdateDto gameResultToUpdate = new GameResultUpdateDto
+            //TODO: Validation  
+            if (GameResultsDataGrid.SelectedItem is GameResultReadDto gameResult)
             {
-                Id = gameResult.Id,
-                GameId = gameResult.Game.Id,
-                SetNr = gameResult.SetNr,
-                ScoreOpponent = Convert.ToByte(ManagementGameResultOpponentsScoreTextBox.Text),
-                ScoreTeamMember = Convert.ToByte(ManagementGameResultTeamMemberScoreTextBox.Text),
-            };
+                GameResultUpdateDto gameResultToUpdate = new GameResultUpdateDto
+                {
+                    Id = gameResult.Id,
+                    GameId = gameResult.Game.Id,
+                    SetNr = gameResult.SetNr,
+                    ScoreOpponent = Convert.ToByte(ManagementGameResultOpponentsScoreTextBox.Text),
+                    ScoreTeamMember = Convert.ToByte(ManagementGameResultTeamMemberScoreTextBox.Text),
+                };
 
-            await WebAPI.Put<GameResultReadDto, GameResultUpdateDto>($"gameresults", gameResultToUpdate);
-            await LoadGameResults();
+                await WebAPI.Put<GameResultReadDto, GameResultUpdateDto>($"gameresults", gameResultToUpdate);
+                await LoadGameResults();
+            }
+            else
+            {
+                MessageBox.Show("Please select a game result");
+            }
         }
 
         private void ViewGameResultsBtn_Click(object sender, RoutedEventArgs e)

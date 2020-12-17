@@ -34,10 +34,10 @@ namespace Tennisclub_WPF.Views
             dataGrid.ItemsSource = memberRolesList;
         }
 
-        private async Task LoadMembers(DataGrid dataGrid)
+        private async Task LoadMembers(DataGrid dataGrid, TextBox federationTextBox, TextBox firstNameTextBox, TextBox lastNameTextBox, TextBox zipCodeTextBox, TextBox cityTextBox)
         {
-            string path = $"members?federationNr={AddFilterFederationNrTextBox.Text}&firstName={AddFilterFirstnameTextBox.Text}" +
-                $"&lastName={AddFilterLastnameTextBox.Text}&zipCode={AddFilterZipcodeTextBox.Text}&city={AddFilterCityTextBox.Text}";
+            string path = $"members?federationNr={federationTextBox.Text}&firstName={firstNameTextBox.Text}" +
+                $"&lastName={lastNameTextBox.Text}&zipCode={zipCodeTextBox.Text}&city={cityTextBox.Text}";
 
             List<MemberReadDto> membersList = await WebAPI.Get<List<MemberReadDto>>(path);
             dataGrid.ItemsSource = membersList;
@@ -52,77 +52,73 @@ namespace Tennisclub_WPF.Views
         private async Task AddMemberRole()
         {
             //TODO: Validation
-            RoleReadDto role = AddRoleComboBox.SelectedItem as RoleReadDto;
-            MemberReadDto member = AddMembersDataGrid.SelectedItem as MemberReadDto;
-            MemberRoleCreateDto memberRole = new MemberRoleCreateDto
+            if (AddMembersDataGrid.SelectedItem is MemberReadDto member)
             {
-                MemberId = member.Id,
-                RoleId = role.Id,
-                StartDate = AddStartDateDatePicker.SelectedDate.Value
-            };
+                RoleReadDto role = AddRoleComboBox.SelectedItem as RoleReadDto;
+                //MemberReadDto member = AddMembersDataGrid.SelectedItem as MemberReadDto;
+                MemberRoleCreateDto memberRole = new MemberRoleCreateDto
+                {
+                    MemberId = member.Id,
+                    RoleId = role.Id,
+                    StartDate = AddStartDateDatePicker.SelectedDate.Value
+                };
 
-            await WebAPI.Post<MemberRoleReadDto, MemberRoleCreateDto>($"memberroles", memberRole);
-        }
-
-        private async Task UpdateMemberRole()
-        {
-            //TODO: Validation
-            MemberRoleReadDto memberRole = MemberListDataGrid.SelectedItem as MemberRoleReadDto;           
-            MemberRoleUpdateDto memberRoleToUpdate = new MemberRoleUpdateDto
-            {
-                Id = memberRole.Id,
-                MemberId = memberRole.Member.Id,
-                RoleId = memberRole.Role.Id,
-                StartDate = memberRole.StartDate,
-                EndDate = UpdateEndDateMemberDatePicker.SelectedDate.Value
-            };
-
-            await WebAPI.Put<MemberRoleReadDto, MemberRoleUpdateDto>($"memberroles", memberRoleToUpdate);           
-        }
-
-        private void AddMemberRoleBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (AddMembersDataGrid.SelectedItem is MemberReadDto)
-            {
-                _ = AddMemberRole();
-                MessageBox.Show("Member role created successfully!");
-                ControlManager.LoopVisualTree(AddMemberRoleGrid, null);
+                await WebAPI.Post<MemberRoleReadDto, MemberRoleCreateDto>($"memberroles", memberRole);
             }
             else
             {
                 MessageBox.Show("Please select a member");
-            }
+            }        
         }
 
-        private void OnEnterHandler(object sender, KeyEventArgs e)
+        private async Task UpdateMemberRole(DataGrid dataGrid, DatePicker datePicker)
         {
-            if (e.Key == Key.Enter)
+            //TODO: Validation
+            if (dataGrid.SelectedItem is MemberRoleReadDto memberRole)
             {
-                _ = LoadMembers(null);               
+                MemberRoleUpdateDto memberRoleToUpdate = new MemberRoleUpdateDto
+                {
+                    Id = memberRole.Id,
+                    EndDate = datePicker.SelectedDate.Value
+                };
+
+                await WebAPI.Put<MemberRoleReadDto, MemberRoleUpdateDto>($"memberroles", memberRoleToUpdate);
             }
-        }     
+            else
+            {
+                MessageBox.Show("Please select a member role");
+            }
+        }       
+
+        private void AddMemberRoleBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _ = AddMemberRole();
+            MessageBox.Show("Member role created successfully!");
+            ControlManager.LoopVisualTree(AddMemberRoleGrid, null);
+        }
 
         private void ViewMemberRolesBtn_Click(object sender, RoutedEventArgs e)
         {
             _ = GetMemberListMemberRoles();
             ResetMemberList(false);
-        }            
+        }
+
+        private void ViewMemberRolesBtn2_Click(object sender, RoutedEventArgs e)
+        {
+            MemberReadDto member = MembersDataGrid.SelectedItem as MemberReadDto;
+            _ = LoadMemberRoles($"memberroles/bymember/{member.Id}", RolesListDataGrid);
+            ResetRoleList(false);
+        }
 
         private void BackToRolesBtn_Click(object sender, RoutedEventArgs e)
         {
             ResetMemberList(true);
         }
 
-        private void TabItem_Loaded_1(object sender, RoutedEventArgs e)
+        private void BackToMembersBtn_Click(object sender, RoutedEventArgs e)
         {
-            _ = LoadRoles(RolesDataGrid);
-        }
-
-        private void TabItem_Loaded(object sender, RoutedEventArgs e)
-        {
-            _ = LoadMembers(AddMembersDataGrid);
-            _ = LoadRoles(AddRoleComboBox);
-        }
+            ResetRoleList(true);
+        }        
 
         private void UpdateMemberListBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -132,11 +128,12 @@ namespace Tennisclub_WPF.Views
             }
         }
 
-        private async Task UpdateMemberList()
+        private void UpdateRoleListBtn_Click(object sender, RoutedEventArgs e)
         {
-            await UpdateMemberRole();
-            await GetMemberListMemberRoles();
-            ControlManager.LoopVisualTree(ManageMembersListGrid, null);
+            if (MessageBox.Show("Do you want to update this member role?", "Update", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                _ = UpdateRoleList();
+            }
         }
 
         private async Task GetMemberListMemberRoles()
@@ -153,6 +150,37 @@ namespace Tennisclub_WPF.Views
             await LoadMemberRoles(path.ToString(), MemberListDataGrid);
         }
 
+        private async Task UpdateMemberList()
+        {
+            await UpdateMemberRole(MemberListDataGrid, UpdateEndDateMemberDatePicker);
+            await GetMemberListMemberRoles();
+            ControlManager.LoopVisualTree(ManageMembersListGrid, null);
+        }
+
+        private async Task UpdateRoleList()
+        {
+            MemberReadDto member = MembersDataGrid.SelectedItem as MemberReadDto;
+            await UpdateMemberRole(RolesListDataGrid, UpdateEndDateRoleDatePicker);
+            await LoadMemberRoles($"memberroles/bymember/{member.Id}", RolesListDataGrid);
+            ControlManager.LoopVisualTree(ManageMembersListGrid, null);
+        }      
+
+        private void AddOnEnterHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                _ = LoadMembers(AddMembersDataGrid, AddFilterFederationNrTextBox, AddFilterFirstnameTextBox, AddFilterLastnameTextBox, AddFilterZipcodeTextBox, AddFilterCityTextBox);
+            }
+        }
+
+        private void OnEnterHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                _ = LoadMembers(MembersDataGrid, FilterFederationNrTextBox, FilterFirstnameTextBox, FilterLastnameTextBox, FilterZipcodeTextBox, FilterCityTextBox);
+            }
+        }
+
         private void ResetMemberList(bool value)
         {
             MemberListDataGrid.Visibility = value ? Visibility.Collapsed : Visibility.Visible;
@@ -164,12 +192,33 @@ namespace Tennisclub_WPF.Views
             MemberListDataGrid.SelectedItem = null;
         }
 
-        private void AddOnEnterHandler(object sender, KeyEventArgs e)
+        private void ResetRoleList(bool value)
         {
-            if (e.Key == Key.Enter)
-            {
-                _ = LoadMembers(AddMembersDataGrid);
-            }
+            RolesListDataGrid.Visibility = value ? Visibility.Collapsed : Visibility.Visible;
+            ManageRoleListGrid.Visibility = value ? Visibility.Collapsed : Visibility.Visible;
+
+            FilterMembersGrid.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            MembersDataGrid.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            ViewRoleListGrid.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+
+            UpdateEndDateRoleDatePicker.SelectedDate = null;
+            RolesListDataGrid.SelectedItem = null;
+        }
+
+        private void TabItem_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            _ = LoadRoles(RolesDataGrid);
+        }
+
+        private void TabItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            _ = LoadMembers(AddMembersDataGrid, AddFilterFederationNrTextBox, AddFilterFirstnameTextBox, AddFilterLastnameTextBox, AddFilterZipcodeTextBox, AddFilterCityTextBox);
+            _ = LoadRoles(AddRoleComboBox);
+        }
+
+        private void TabItem_Loaded_2(object sender, RoutedEventArgs e)
+        {
+            _ = LoadMembers(MembersDataGrid, FilterFederationNrTextBox, FilterFirstnameTextBox, FilterLastnameTextBox, FilterZipcodeTextBox, FilterCityTextBox);
         }
     }
 }

@@ -17,8 +17,10 @@ namespace Tennisclub_WPF.ViewModels
             set { _member = value; OnPropertyChanged("Member"); }
         }
 
-        //GameResult update
+        //Update game result
         private GameResultReadDto _gameResult;
+        private byte _scoreTeamMember;
+        private byte _scoreOpponent;
 
         public GameResultReadDto GameResult
         {
@@ -32,15 +34,11 @@ namespace Tennisclub_WPF.ViewModels
             }
         }     
 
-        private byte _scoreTeamMember;
-
         public byte ScoreTeamMember
         {
             get { return _scoreTeamMember; }
             set { _scoreTeamMember = value; OnPropertyChanged("ScoreTeamMember"); }
         }
-
-        private byte _scoreOpponent;
 
         public byte ScoreOpponent
         {
@@ -48,8 +46,10 @@ namespace Tennisclub_WPF.ViewModels
             set { _scoreOpponent = value; OnPropertyChanged("ScoreOpponent"); }
         }
 
-        //GameResult add
+        //Add game result
         private byte _addSetNr;
+        private byte _addScoreTeamMember;
+        private byte _addScoreOpponent;
 
         public byte AddSetNr
         {
@@ -57,15 +57,11 @@ namespace Tennisclub_WPF.ViewModels
             set { _addSetNr = value; OnPropertyChanged("AddSetNr"); }
         }
 
-        private byte _addScoreTeamMember;
-
         public byte AddScoreTeamMember
         {
             get { return _addScoreTeamMember; }
             set { _addScoreTeamMember = value; OnPropertyChanged("AddScoreTeamMember"); }
         }
-
-        private byte _addScoreOpponent;
 
         public byte AddScoreOpponent
         {

@@ -30,7 +30,7 @@ namespace Tennisclub_WPF.Validations
             }
             else if (!_regex.Match(value.ToString()).Success)
             {
-                return new ValidationResult(false, "This field can only contain numbers.");
+                return new ValidationResult(false, "This field can only contain decimals.");
             }
             else
             {
