@@ -4,16 +4,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Tennisclub_Common.GameDTO;
 using Tennisclub_Common.LeagueDTO;
 using Tennisclub_Common.MemberDTO;
+using Tennisclub_WPF.Helpers;
 
 namespace Tennisclub_WPF.Views
 {
@@ -52,50 +47,60 @@ namespace Tennisclub_WPF.Views
 
         private async Task CreateGame()
         {
-            //TODO: Validation
-            LeagueReadDto league = ManagementLeagueComboBox.SelectedItem as LeagueReadDto;
-            MemberReadDto member = MembersDataGrid.SelectedItem as MemberReadDto;
-            GameCreateDto game = new GameCreateDto
+            if (MembersDataGrid.SelectedItem is MemberReadDto member)
             {
-                GameNumber = ManagementGameNumberTextBox.Text,
-                MemberId = member.Id,
-                LeagueId = league.Id,
-                Date = ManagementDateDatePicker.SelectedDate.Value
-            };
+                LeagueReadDto league = ManagementLeagueComboBox.SelectedItem as LeagueReadDto;
+                GameCreateDto game = new GameCreateDto
+                {
+                    GameNumber = ManagementGameNumberTextBox.Text,
+                    MemberId = member.Id,
+                    LeagueId = league.Id,
+                    Date = ManagementDateDatePicker.SelectedDate.Value
+                };
 
-            await WebAPI.Post<GameReadDto, GameCreateDto>($"games", game);
+                var result = await WebAPI.Post<GameReadDto, GameCreateDto>($"games", game);
 
-            await LoadGames($"games/bymember/{member.Id}?date={FilterDateDatePicker.SelectedDate:yyyy/MM/dd}");
+                if (result != null)
+                {
+                    await LoadGames($"games/bymember/{member.Id}?date={FilterDateDatePicker.SelectedDate:yyyy/MM/dd}");
+                    ManagementGameNumberTextBox.Text = null;
+                    ManagementDateDatePicker.SelectedDate = null;
+                }
+            }          
         }       
 
         private async Task UpdateGame()
         {
-            //TODO: Validation
-            GameReadDto gameToUpdate = GamesDataGrid.SelectedItem as GameReadDto;
-            LeagueReadDto league = ManagementLeagueComboBox.SelectedItem as LeagueReadDto;
-            MemberReadDto member = MembersDataGrid.SelectedItem as MemberReadDto;
-            GameUpdateDto game = new GameUpdateDto
-            {
-                Id = gameToUpdate.Id,
-                GameNumber = ManagementGameNumberTextBox.Text,
-                MemberId = member.Id,
-                LeagueId = league.Id,
-                Date = ManagementDateDatePicker.SelectedDate.Value
-            };
+            if (GamesDataGrid.SelectedItem is GameReadDto gameToUpdate && MembersDataGrid.SelectedItem is MemberReadDto member)
+            {                
+                LeagueReadDto league = ManagementLeagueComboBox.SelectedItem as LeagueReadDto;
+                GameUpdateDto game = new GameUpdateDto
+                {
+                    Id = gameToUpdate.Id,
+                    GameNumber = ManagementGameNumberTextBox.Text,
+                    MemberId = member.Id,
+                    LeagueId = league.Id,
+                    Date = ManagementDateDatePicker.SelectedDate.Value
+                };
 
-            await WebAPI.Put<GameReadDto, GameUpdateDto>($"games", game);
+                var result = await WebAPI.Put<GameReadDto, GameUpdateDto>($"games", game);
 
-            await LoadGames($"games/bymember/{member.Id}?date={FilterDateDatePicker.SelectedDate:yyyy/MM/dd}");
+                if (result != null)
+                {
+                    await LoadGames($"games/bymember/{member.Id}?date={FilterDateDatePicker.SelectedDate:yyyy/MM/dd}");
+                    ManagementGameNumberTextBox.Text = null;
+                    ManagementDateDatePicker.SelectedDate = null;
+                }
+            }           
         }
 
         private async Task DeleteGame()
         {
-            //TODO: Validation
-            MemberReadDto member = MembersDataGrid.SelectedItem as MemberReadDto;
-            GameReadDto gameToDelete = GamesDataGrid.SelectedItem as GameReadDto;
-
-            await WebAPI.Delete($"games/delete/{gameToDelete.Id}");
-            await LoadGames($"games/bymember/{member.Id}?date={FilterDateDatePicker.SelectedDate:yyyy/MM/dd}");
+            if (MembersDataGrid.SelectedItem is MemberReadDto member && GamesDataGrid.SelectedItem is GameReadDto gameToDelete)
+            {
+                await WebAPI.Delete($"games/delete/{gameToDelete.Id}");
+                await LoadGames($"games/bymember/{member.Id}?date={FilterDateDatePicker.SelectedDate:yyyy/MM/dd}");              
+            }           
         }
 
         private void ViewGamesBtn_Click(object sender, RoutedEventArgs e)
@@ -104,20 +109,11 @@ namespace Tennisclub_WPF.Views
             _ = LoadGames($"games/bymember/{member.Id}");
 
             Reset(false);
-            //ViewGamesGrid.Visibility = Visibility.Collapsed;
-            //MembersDataGrid.Visibility = Visibility.Collapsed;
-            //MemberFilterGrid.Visibility = Visibility.Collapsed;
-
-            //ManageGamesGrid.Visibility = Visibility.Visible;
-            //GamesDataGrid.Visibility = Visibility.Visible;
-            //GameFilterGrid.Visibility = Visibility.Visible;
-            //FilterDateDatePicker.SelectedDate = null;
         }
 
         private void AddGameBtn_Click(object sender, RoutedEventArgs e)
         {
-            _ = CreateGame();
-            
+            _ = CreateGame();        
         }
 
         private void UpdateGameBtn_Click(object sender, RoutedEventArgs e)

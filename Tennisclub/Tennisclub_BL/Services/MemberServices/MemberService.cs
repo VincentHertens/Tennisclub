@@ -71,9 +71,6 @@ namespace Tennisclub_BL.Services.MemberServices
 
         public void Delete(int id)
         {
-            if (GetById(id) == null)
-                throw new NullReferenceException($"No member with id {id} exists");
-
             _repository.Delete(id);
         }
 

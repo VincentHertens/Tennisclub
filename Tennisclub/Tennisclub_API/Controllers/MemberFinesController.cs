@@ -22,37 +22,65 @@ namespace Tennisclub_API.Controllers
         [HttpGet("bymember/{id}")]
         public ActionResult<IEnumerable<MemberFineReadDto>> GetAllByMember(int id, [FromQuery] DateTime? handoutDate, DateTime? paymentDate)
         {
-            return Ok(_service.GetAllByMember(id, handoutDate, paymentDate));
+            try
+            {
+                return Ok(_service.GetAllByMember(id, handoutDate, paymentDate));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }           
         }
 
         [HttpGet("{id}")]
         public ActionResult<MemberFineReadDto> GetById(int id)
         {
-            var memberFine = _service.GetById(id);
+            try
+            {
+                var memberFine = _service.GetById(id);
 
-            if (memberFine != null)
-                return Ok(memberFine);
+                if (memberFine != null)
+                    return Ok(memberFine);
 
-            return NotFound();
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }           
         }
 
         [HttpPost]
         public ActionResult<MemberFineReadDto> Add(MemberFineCreateDto memberFineCreateDto)
         {
-            if (memberFineCreateDto == null)
-                return BadRequest(new { Message = "Member fine cannot be empty" });
+            try
+            {
+                if (memberFineCreateDto == null)
+                    return BadRequest(new { Message = "Member fine cannot be empty" });
 
-            var memberFine = _service.Add(memberFineCreateDto);
-            return CreatedAtAction(nameof(GetById), new { Id = memberFine.Id }, memberFine);
+                var memberFine = _service.Add(memberFineCreateDto);
+                return CreatedAtAction(nameof(GetById), new { Id = memberFine.Id }, memberFine);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }            
         }
 
         [HttpPut]
         public ActionResult<MemberFineReadDto> Update(MemberFineUpdateDto memberFineUpdateDto)
         {
-            if (memberFineUpdateDto == null)
-                return BadRequest(new { Message = "Member fine cannot be empty" });
+            try
+            {
+                if (memberFineUpdateDto == null)
+                    return BadRequest(new { Message = "Member fine cannot be empty" });
 
-            return Ok(_service.Update(memberFineUpdateDto));
+                return Ok(_service.Update(memberFineUpdateDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }            
         }      
     }
 }

@@ -7,13 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_API", "Tennisclu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_DAL", "Tennisclub_DAL\Tennisclub_DAL.csproj", "{BF1D6390-C407-4338-B186-7EDF0107371C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_UI", "Tennisclub_UI\Tennisclub_UI.csproj", "{46C0545A-25D5-48A2-96EF-C09BC27F7246}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_BL", "Tennisclub_BL\Tennisclub_BL.csproj", "{F1E6B6B6-2D8B-4D3F-9E48-7328BE00C95C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_Common", "Tennisclub_Common\Tennisclub_Common.csproj", "{C610417D-7907-4E30-90D7-A66304E642CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tennisclub_WPF", "Tennisclub_WPF\Tennisclub_WPF.csproj", "{6080CCD4-1C17-4A73-AD8B-4BBD4EF92641}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tennisclub_WPF", "Tennisclub_WPF\Tennisclub_WPF.csproj", "{6080CCD4-1C17-4A73-AD8B-4BBD4EF92641}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{BF1D6390-C407-4338-B186-7EDF0107371C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF1D6390-C407-4338-B186-7EDF0107371C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF1D6390-C407-4338-B186-7EDF0107371C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46C0545A-25D5-48A2-96EF-C09BC27F7246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46C0545A-25D5-48A2-96EF-C09BC27F7246}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46C0545A-25D5-48A2-96EF-C09BC27F7246}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46C0545A-25D5-48A2-96EF-C09BC27F7246}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F1E6B6B6-2D8B-4D3F-9E48-7328BE00C95C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1E6B6B6-2D8B-4D3F-9E48-7328BE00C95C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1E6B6B6-2D8B-4D3F-9E48-7328BE00C95C}.Release|Any CPU.ActiveCfg = Release|Any CPU

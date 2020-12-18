@@ -68,9 +68,6 @@ namespace Tennisclub_BL.Services.GameServices
 
         public void Delete(int id)
         {            
-            if (GetById(id) == null)
-                throw new NullReferenceException($"No game with id {id} exists");
-
             _repository.Delete(id);
         }
 

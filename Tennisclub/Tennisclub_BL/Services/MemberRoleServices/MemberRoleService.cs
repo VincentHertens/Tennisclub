@@ -66,7 +66,7 @@ namespace Tennisclub_BL.Services.MemberRoleServices
             if (list.Count() != 0)
                 throw new ArgumentException($"The combination of memberid, roleid, start date and end date must be unique");
 
-            if (memberRoleUpdateDto.EndDate <= memberRole.StartDate)
+            if (memberRoleUpdateDto.EndDate < memberRole.StartDate)
                 throw new Exception("End date must be greater than start date");
 
             return _repository.Update(memberRoleUpdateDto);

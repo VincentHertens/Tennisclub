@@ -35,28 +35,41 @@ namespace Tennisclub_WPF.Views
 
         private async Task AddRole()
         {
-            //TODO Validation
-            RoleCreateDto role = new RoleCreateDto
+            if (RolesDataGrid.SelectedItem == null)
             {
-                Name = ManagementNameTextBox.Text
-            };
+                RoleCreateDto role = new RoleCreateDto
+                {
+                    Name = ManagementNameTextBox.Text
+                };
 
-            await WebAPI.Post<RoleReadDto, RoleCreateDto>("roles", role);
-            _ = LoadRoles();
+                var result = await WebAPI.Post<RoleReadDto, RoleCreateDto>("roles", role);
+
+                if (result != null)
+                {
+                    _ = LoadRoles();
+                    ManagementNameTextBox.Text = null;
+                }
+            }            
         }
 
         private async Task UpdateRole()
         {
-            //TODO Validation
-            RoleReadDto roleToUpdate = RolesDataGrid.SelectedItem as RoleReadDto;
-            RoleUpdateDto role = new RoleUpdateDto
-            {
-                Id = roleToUpdate.Id,
-                Name = ManagementNameTextBox.Text
-            };
+            if (RolesDataGrid.SelectedItem is RoleReadDto roleToUpdate)
+            {               
+                RoleUpdateDto role = new RoleUpdateDto
+                {
+                    Id = roleToUpdate.Id,
+                    Name = ManagementNameTextBox.Text
+                };
 
-            await WebAPI.Put<RoleReadDto, RoleUpdateDto>("roles", role);
-            _ = LoadRoles();
+                var result = await WebAPI.Put<RoleReadDto, RoleUpdateDto>("roles", role);
+
+                if (result != null)
+                {
+                    _ = LoadRoles();
+                    ManagementNameTextBox.Text = null;
+                }
+            }           
         }
 
         private void AddRoleBtn_Click(object sender, RoutedEventArgs e)
@@ -75,6 +88,7 @@ namespace Tennisclub_WPF.Views
         private void NewRoleBtn_Click(object sender, RoutedEventArgs e)
         {
             RolesDataGrid.SelectedItem = null;
+            ManagementNameTextBox.Text = null;
         }
     }
 }

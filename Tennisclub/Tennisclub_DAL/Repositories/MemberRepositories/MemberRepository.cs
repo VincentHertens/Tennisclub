@@ -17,7 +17,7 @@ namespace Tennisclub_DAL.Repositories.MemberRepositories
             Member member = _dbSet.Find(id);
             member.Active = false;
             _dbSet.Update(member);
-            SaveChanges();        
+            SaveChanges();
         }
 
         public override MemberReadDto Add(MemberCreateDto createDto)

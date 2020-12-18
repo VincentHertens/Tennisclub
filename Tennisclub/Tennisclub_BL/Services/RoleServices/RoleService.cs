@@ -23,9 +23,6 @@ namespace Tennisclub_BL.Services.RoleServices
 
         public RoleReadDto GetById(byte id)
         {
-            if (id < 1)
-                throw new ArgumentOutOfRangeException("Id cannot have a value less than 1");
-
             return _repository.GetById(id);
         }
 

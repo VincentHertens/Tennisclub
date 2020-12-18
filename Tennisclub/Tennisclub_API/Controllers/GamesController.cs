@@ -26,49 +26,84 @@ namespace Tennisclub_API.Controllers
         [HttpGet("bymember/{id}")]
         public ActionResult<IEnumerable<GameReadDto>> GetAllByMember(int id, [FromQuery] DateTime? date)
         {
-            return Ok(_service.GetAllByMember(id, date));
+            try
+            {
+                return Ok(_service.GetAllByMember(id, date));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult<GameReadDto> GetById(int id)
         {
-            var game = _service.GetById(id);
+            try
+            {
+                var game = _service.GetById(id);
 
-            if (game != null)
-                return Ok(game);
+                if (game != null)
+                    return Ok(game);
 
-            return NotFound();
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }           
         }
 
         [HttpPost]
         public ActionResult<GameReadDto> Add(GameCreateDto gameCreateDto)
         {
-            if (gameCreateDto == null)
-                return BadRequest(new { Message = "Game cannot be empty" });
+            try
+            {
+                if (gameCreateDto == null)
+                    return BadRequest(new { Message = "Game cannot be empty" });
 
-            var game = _service.Add(gameCreateDto);
-            return CreatedAtAction(nameof(GetById), new { Id = game.Id }, game);
+                var game = _service.Add(gameCreateDto);
+                return CreatedAtAction(nameof(GetById), new { Id = game.Id }, game);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }           
         }
 
         [HttpPut]
         public ActionResult<GameReadDto> Update(GameUpdateDto gameUpdateDto)
         {
-            if (gameUpdateDto == null)
-                return BadRequest(new { Message = "Game cannot be empty" });
+            try
+            {
+                if (gameUpdateDto == null)
+                    return BadRequest(new { Message = "Game cannot be empty" });
 
-            return Ok(_service.Update(gameUpdateDto));
+                return Ok(_service.Update(gameUpdateDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }            
         }
 
         [HttpDelete("delete/{id}")]
         public ActionResult Delete(int id)
         {
-            var game = _service.GetById(id);
+            try
+            {
+                var game = _service.GetById(id);
 
-            if (game == null)
-                return NotFound();    
-            
-            _service.Delete(id);
-            return NoContent();
+                if (game == null)
+                    return NotFound();
+
+                _service.Delete(id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }           
         }
     }
 }

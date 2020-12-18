@@ -20,28 +20,49 @@ namespace Tennisclub_API.Controllers
         [HttpGet("bymember/{id}")]
         public ActionResult<IEnumerable<GameResultReadDto>> GetAllByMember(int id, [FromQuery] DateTime? date)
         {
-            return Ok(_service.GetAllByMember(id, date));
+            try
+            {
+                return Ok(_service.GetAllByMember(id, date));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }           
         }
 
         [HttpGet("{id}")]
         public ActionResult<GameResultReadDto> GetById(int id)
         {
-            var gameResult = _service.GetById(id);
+            try
+            {
+                var gameResult = _service.GetById(id);
 
-            if (gameResult != null)
-                return Ok(gameResult);
+                if (gameResult != null)
+                    return Ok(gameResult);
 
-            return NotFound();
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }          
         }
 
         [HttpPost]
         public ActionResult<GameResultReadDto> Add(GameResultCreateDto gameResultCreateDto)
         {
-            if (gameResultCreateDto == null)
-                return BadRequest(new { Message = "Game result cannot be empty" });    
-            
-            var gameResult = _service.Add(gameResultCreateDto);
-            return CreatedAtAction(nameof(GetById), new { Id = gameResult.Id }, gameResult);
+            try
+            {
+                if (gameResultCreateDto == null)
+                    return BadRequest(new { Message = "Game result cannot be empty" });
+
+                var gameResult = _service.Add(gameResultCreateDto);
+                return CreatedAtAction(nameof(GetById), new { Id = gameResult.Id }, gameResult);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }            
         }
 
         [HttpPut]

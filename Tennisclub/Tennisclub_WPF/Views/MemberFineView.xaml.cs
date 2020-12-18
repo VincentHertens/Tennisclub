@@ -48,7 +48,6 @@ namespace Tennisclub_WPF.Views
 
         private async Task AddMemberFine()
         {
-            //TODO: Validation
             if (AddDataGrid.SelectedItem is MemberReadDto member)
             {
                 MemberFineCreateDto memberFine = new MemberFineCreateDto
@@ -59,7 +58,15 @@ namespace Tennisclub_WPF.Views
                     MemberId = member.Id
                 };
 
-                await WebAPI.Post<MemberFineReadDto, MemberFineCreateDto>($"memberfines", memberFine);
+                var result = await WebAPI.Post<MemberFineReadDto, MemberFineCreateDto>($"memberfines", memberFine);
+
+                if (result != null)
+                {
+                    MessageBox.Show("Fine created successfully!");
+                    ControlManager.LoopVisualTree(AddFineGrid, null);
+                    AddFineNumberTextBox.Text = "0";
+                    AddDataGrid.SelectedItem = null;
+                }
             }
             else
             {
@@ -69,7 +76,6 @@ namespace Tennisclub_WPF.Views
 
         private async Task UpdateMemberFine()
         {
-            //TODO: Validation
             if (MemberFinesDataGrid.SelectedItem is MemberFineReadDto memberFine)
             {
                 MemberFineUpdateDto memberFineToUpdate = new MemberFineUpdateDto
@@ -78,8 +84,13 @@ namespace Tennisclub_WPF.Views
                     PaymentDate = UpdatePaymentDateDatePicker.SelectedDate.Value
                 };
 
-                await WebAPI.Put<MemberFineReadDto, MemberFineUpdateDto>($"memberfines", memberFineToUpdate);
-                await LoadMemberFines();
+                var result = await WebAPI.Put<MemberFineReadDto, MemberFineUpdateDto>($"memberfines", memberFineToUpdate);
+
+                if (result != null)
+                {
+                    await LoadMemberFines();
+                    ControlManager.LoopVisualTree(ManageMemberFinesGrid, null);
+                }
             }
             else
             {
@@ -89,11 +100,7 @@ namespace Tennisclub_WPF.Views
 
         private void AddFineBtn_Click(object sender, RoutedEventArgs e)
         {
-            _ = AddMemberFine();
-            MessageBox.Show("Fine created successfully!");
-            ControlManager.LoopVisualTree(AddFineGrid, null);
-            AddFineNumberTextBox.Text = "0";
-            AddDataGrid.SelectedItem = null;
+            _ = AddMemberFine();            
         }
 
         private void ViewMemberFinesBtn_Click(object sender, RoutedEventArgs e)
@@ -107,7 +114,6 @@ namespace Tennisclub_WPF.Views
             if (MessageBox.Show("Do you want to update this fine?", "Update", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _ = UpdateMemberFine();
-                ControlManager.LoopVisualTree(ManageMemberFinesGrid, null);
             }
         }
 

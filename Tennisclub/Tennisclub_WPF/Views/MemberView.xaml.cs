@@ -44,59 +44,71 @@ namespace Tennisclub_WPF.Views
 
         private async Task AddMember()
         {
-            //TODO: Validation
-            GenderReadDto gender = ManagementGenderComboBox.SelectedItem as GenderReadDto;
-            MemberCreateDto member = new MemberCreateDto
+            if (MembersDataGrid.SelectedItem == null)
             {
-                FederationNr = ManagementFederationNrTextBox.Text,
-                FirstName = ManagementFirstNameTextBox.Text,
-                LastName = ManagementLastNameTextBox.Text,
-                BirthDate = ManagementBirthDateDatePicker.SelectedDate.Value,
-                GenderId = gender.Id,
-                Number = ManagementNumberTextBox.Text,
-                Address = ManagementAddressTextBox.Text,
-                Addition = ManagementAdditionTextBox.Text,
-                Zipcode = ManagementZipCodeTextBox.Text,
-                City = ManagementCityTextBox.Text,
-                PhoneNr = ManagementPhoneNrTextBox.Text
-            };
+                GenderReadDto gender = ManagementGenderComboBox.SelectedItem as GenderReadDto;
+                MemberCreateDto member = new MemberCreateDto
+                {
+                    FederationNr = ManagementFederationNrTextBox.Text,
+                    FirstName = ManagementFirstNameTextBox.Text,
+                    LastName = ManagementLastNameTextBox.Text,
+                    BirthDate = ManagementBirthDateDatePicker.SelectedDate.Value,
+                    GenderId = gender.Id,
+                    Number = ManagementNumberTextBox.Text,
+                    Address = ManagementAddressTextBox.Text,
+                    Addition = ManagementAdditionTextBox.Text,
+                    Zipcode = ManagementZipCodeTextBox.Text,
+                    City = ManagementCityTextBox.Text,
+                    PhoneNr = ManagementPhoneNrTextBox.Text
+                };
 
-            await WebAPI.Post<MemberReadDto, MemberCreateDto>($"members", member);
-            _ = LoadMembers();
+                var result = await WebAPI.Post<MemberReadDto, MemberCreateDto>($"members", member);
+
+                if (result != null)
+                {
+                    _ = LoadMembers();
+                    ControlManager.LoopVisualTree(AddMemberGrid, null);
+                }
+            }           
         }
 
         private async Task UpdateMember()
         {
-            //TODO: Validation
-            MemberReadDto memberToUpdate = MembersDataGrid.SelectedItem as MemberReadDto;
-            GenderReadDto gender = ManagementGenderComboBox.SelectedItem as GenderReadDto;
-            MemberUpdateDto member = new MemberUpdateDto
-            {
-                Id = memberToUpdate.Id,
-                FederationNr = ManagementFederationNrTextBox.Text,
-                FirstName = ManagementFirstNameTextBox.Text,
-                LastName = ManagementLastNameTextBox.Text,
-                BirthDate = ManagementBirthDateDatePicker.SelectedDate.Value,
-                GenderId = gender.Id,
-                Number = ManagementNumberTextBox.Text,
-                Address = ManagementAddressTextBox.Text,
-                Addition = ManagementAdditionTextBox.Text,
-                Zipcode = ManagementZipCodeTextBox.Text,
-                City = ManagementCityTextBox.Text,
-                PhoneNr = ManagementPhoneNrTextBox.Text
-            };
+            if (MembersDataGrid.SelectedItem is MemberReadDto memberToUpdate)
+            {               
+                GenderReadDto gender = ManagementGenderComboBox.SelectedItem as GenderReadDto;
+                MemberUpdateDto member = new MemberUpdateDto
+                {
+                    Id = memberToUpdate.Id,
+                    FederationNr = ManagementFederationNrTextBox.Text,
+                    FirstName = ManagementFirstNameTextBox.Text,
+                    LastName = ManagementLastNameTextBox.Text,
+                    BirthDate = ManagementBirthDateDatePicker.SelectedDate.Value,
+                    GenderId = gender.Id,
+                    Number = ManagementNumberTextBox.Text,
+                    Address = ManagementAddressTextBox.Text,
+                    Addition = ManagementAdditionTextBox.Text,
+                    Zipcode = ManagementZipCodeTextBox.Text,
+                    City = ManagementCityTextBox.Text,
+                    PhoneNr = ManagementPhoneNrTextBox.Text
+                };
 
-            await WebAPI.Put<MemberReadDto, MemberUpdateDto>($"members", member);
-            _ = LoadMembers();
+                var result = await WebAPI.Put<MemberReadDto, MemberUpdateDto>($"members", member);
+
+                if (result != null)
+                {
+                    _ = LoadMembers();
+                }               
+            }           
         }
 
         private async Task DeleteMember()
         {
-            //TODO: Validation
-            MemberReadDto memberToDelete = MembersDataGrid.SelectedItem as MemberReadDto;
-
-            await WebAPI.Delete($"members/delete/{memberToDelete.Id}");
-            _ = LoadMembers();
+            if (MembersDataGrid.SelectedItem is MemberReadDto memberToDelete)
+            {
+                await WebAPI.Delete($"members/delete/{memberToDelete.Id}");
+                _ = LoadMembers();
+            }                       
         }
 
         private void OnEnterHandler(object sender, KeyEventArgs e)
@@ -131,8 +143,7 @@ namespace Tennisclub_WPF.Views
 
         private void AddMemberBtn_Click(object sender, RoutedEventArgs e)
         {
-            _ = AddMember();
-            ControlManager.LoopVisualTree(AddMemberGrid, null);
+            _ = AddMember();            
         }
     }
 }

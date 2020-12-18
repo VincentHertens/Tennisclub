@@ -4,13 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Tennisclub_Common.GameDTO;
 using Tennisclub_Common.GameResultDTO;
 using Tennisclub_Common.MemberDTO;
@@ -51,8 +45,7 @@ namespace Tennisclub_WPF.Views
         }
 
         private async Task AddGameResult()
-        {
-            //TODO: Validation
+        {           
             if (GamesDataGrid.SelectedItem is GameReadDto game)
             {
                 GameResultCreateDto gameResult = new GameResultCreateDto
@@ -63,7 +56,13 @@ namespace Tennisclub_WPF.Views
                     SetNr = Convert.ToByte(AddGameResultSetNrTextBox.Text)
                 };
 
-                await WebAPI.Post<GameResultReadDto, GameResultCreateDto>($"gameresults", gameResult);
+                var result = await WebAPI.Post<GameResultReadDto, GameResultCreateDto>($"gameresults", gameResult);
+
+                if (result != null)
+                {
+                    MessageBox.Show("Game result created successfully!");
+                    ControlManager.LoopVisualTree(AddGameGrid, "0");
+                }
             }
             else
             {
@@ -73,7 +72,6 @@ namespace Tennisclub_WPF.Views
 
         private async Task UpdateGameResult()
         {
-            //TODO: Validation  
             if (GameResultsDataGrid.SelectedItem is GameResultReadDto gameResult)
             {
                 GameResultUpdateDto gameResultToUpdate = new GameResultUpdateDto
@@ -83,8 +81,12 @@ namespace Tennisclub_WPF.Views
                     ScoreTeamMember = Convert.ToByte(ManagementGameResultTeamMemberScoreTextBox.Text),
                 };
 
-                await WebAPI.Put<GameResultReadDto, GameResultUpdateDto>($"gameresults", gameResultToUpdate);
-                await LoadGameResults();
+                var result = await WebAPI.Put<GameResultReadDto, GameResultUpdateDto>($"gameresults", gameResultToUpdate);
+
+                if (result != null)
+                {
+                    await LoadGameResults();
+                }
             }
             else
             {
@@ -131,16 +133,7 @@ namespace Tennisclub_WPF.Views
 
         private void AddGameResultBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (GamesDataGrid.SelectedItem is GameReadDto)
-            {
-                _ = AddGameResult();
-                MessageBox.Show("Game result created successfully!");
-                ControlManager.LoopVisualTree(AddGameGrid, "0");
-            }
-            else
-            {
-                MessageBox.Show("Please select a game");
-            }
+             _ = AddGameResult();                          
         }
 
         private void GameResultListTabItem_Loaded(object sender, RoutedEventArgs e)

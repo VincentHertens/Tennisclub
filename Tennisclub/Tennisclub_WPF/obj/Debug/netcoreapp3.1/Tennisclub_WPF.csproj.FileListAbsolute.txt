@@ -35,3 +35,4 @@ E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_WPF\obj\Debug\
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_WPF\obj\Debug\netcoreapp3.1\Views\GameView.g.cs
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_WPF\obj\Debug\netcoreapp3.1\Views\GameResultView.baml
 E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_WPF\obj\Debug\netcoreapp3.1\Views\GameView.baml
+E:\School 2020\Programmeren in .NET\Backend\Tennisclub\Tennisclub_WPF\bin\Debug\netcoreapp3.1\Tennisclub_WPF.dll.config

@@ -21,5 +21,15 @@ namespace Tennisclub_DAL.Repositories.GameResultRepositories
 
             return base.Add(createDto);
         }
+
+        public override GameResultReadDto Update(GameResultUpdateDto updateDto)
+        {
+            var gameResult = _dbSet.Find(updateDto.Id);
+            gameResult.ScoreOpponent = updateDto.ScoreOpponent;
+            gameResult.ScoreTeamMember = updateDto.ScoreTeamMember;
+            _dbSet.Update(gameResult);
+            SaveChanges();
+            return GetById(gameResult.Id);
+        }
     }
 }
