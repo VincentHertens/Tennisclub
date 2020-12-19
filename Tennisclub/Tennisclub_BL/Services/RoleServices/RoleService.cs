@@ -18,7 +18,8 @@ namespace Tennisclub_BL.Services.RoleServices
 
         public IEnumerable<RoleReadDto> GetAll()
         {
-            return _repository.GetAll();
+            //return _repository.GetAll();
+            return _repository.GetAllRolesSP();
         }
 
         public RoleReadDto GetById(byte id)

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,13 @@ namespace Tennisclub_DAL.Repositories.MemberRoleRepositories
             _dbSet.Update(memberRole);
             SaveChanges();
             return GetById(memberRole.Id);
+        }
+
+        public IEnumerable<MemberRoleReadDto> GetAllMemberRolesByMemberInlineQuery(int id)
+        {
+            var parameter = new SqlParameter("@Id", id);
+            var memberRoles = _dbSet.FromSqlRaw("Select * from MemberRoles where MemberId = @Id", parameter).Include(x => x.Role).AsNoTracking().ToList();
+            return _mapper.Map<IEnumerable<MemberRoleReadDto>>(memberRoles);
         }
     }
 }

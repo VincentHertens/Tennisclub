@@ -8,6 +8,5 @@ namespace Tennisclub_DAL.Repositories.GameRepositories
 {
     public interface IGameRepository : IGenericRepository<Game, GameReadDto, GameCreateDto, GameUpdateDto, int>
     {
-        
     }
 }

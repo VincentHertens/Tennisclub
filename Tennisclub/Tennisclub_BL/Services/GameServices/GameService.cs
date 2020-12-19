@@ -18,7 +18,7 @@ namespace Tennisclub_BL.Services.GameServices
         }
 
         public IEnumerable<GameReadDto> GetAllByDate(DateTime? date)
-        {
+        {           
             return _repository.GetAll(filter: game => (game.Date == date || date == null),
                 orderBy: game => game.OrderBy(x => x.Date),
                 x => x.Member, x => x.League);

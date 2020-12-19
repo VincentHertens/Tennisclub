@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Tennisclub_Common.GameDTO;
 using Tennisclub_DAL.Models;
 

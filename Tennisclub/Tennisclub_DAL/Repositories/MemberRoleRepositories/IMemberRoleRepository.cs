@@ -8,6 +8,6 @@ namespace Tennisclub_DAL.Repositories.MemberRoleRepositories
 {
     public interface IMemberRoleRepository : IGenericRepository<MemberRole, MemberRoleReadDto, MemberRoleCreateDto, MemberRoleUpdateDto, int>
     {
-
+        public IEnumerable<MemberRoleReadDto> GetAllMemberRolesByMemberInlineQuery(int id);
     }
 }

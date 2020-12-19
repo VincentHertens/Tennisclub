@@ -21,9 +21,11 @@ namespace Tennisclub_BL.Services.MemberRoleServices
             if (id < 1)
                 throw new ArgumentOutOfRangeException("Id cannot have a value less than 1");
 
-            return _repository.GetAll(filter : memberRole => memberRole.MemberId == id,
-                orderBy: null,
-                includeProperties: x => x.Role);
+            return _repository.GetAllMemberRolesByMemberInlineQuery(id);
+
+            //return _repository.GetAll(filter : memberRole => memberRole.MemberId == id,
+            //    orderBy: null,
+            //    includeProperties: x => x.Role);
         }
 
         public IEnumerable<MemberRoleReadDto> GetAllMemberRolesByRoles(List<byte> roles)
@@ -48,7 +50,7 @@ namespace Tennisclub_BL.Services.MemberRoleServices
             && memberRole.StartDate == memberRoleCreateDto.StartDate && memberRole.EndDate == null);
 
             if (list.Count() != 0)
-                throw new ArgumentException($"The combination of memberid, roleid, start date and end date must be unique");
+                throw new ArgumentException($"The combination of member, role, start date and end date must be unique");
 
             return _repository.Add(memberRoleCreateDto);
         }
@@ -64,7 +66,7 @@ namespace Tennisclub_BL.Services.MemberRoleServices
                 throw new Exception("Can't update this member role");
 
             if (list.Count() != 0)
-                throw new ArgumentException($"The combination of memberid, roleid, start date and end date must be unique");
+                throw new ArgumentException($"The combination of member, role, start date and end date must be unique");
 
             if (memberRoleUpdateDto.EndDate < memberRole.StartDate)
                 throw new Exception("End date must be greater than start date");

@@ -27,7 +27,7 @@ namespace Tennisclub_DAL
             modelBuilder.ApplyConfiguration(new MemberRoleConfiguration());
             modelBuilder.ApplyConfiguration(new MemberFineConfiguration());
             modelBuilder.ApplyConfiguration(new GameConfiguration());
-            modelBuilder.ApplyConfiguration(new GameResultConfiguration());            
+            modelBuilder.ApplyConfiguration(new GameResultConfiguration());                  
         }
     }
 }

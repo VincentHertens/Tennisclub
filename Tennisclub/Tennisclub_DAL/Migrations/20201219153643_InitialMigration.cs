@@ -286,6 +286,8 @@ namespace Tennisclub_DAL.Migrations
                 table: "Roles",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.Sql(@"CREATE PROCEDURE sp_getRoles AS SELECT * FROM Roles");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -313,6 +315,8 @@ namespace Tennisclub_DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Genders");
+
+            migrationBuilder.Sql("DROP PROCEDURE sp_getRoles");
         }
     }
 }

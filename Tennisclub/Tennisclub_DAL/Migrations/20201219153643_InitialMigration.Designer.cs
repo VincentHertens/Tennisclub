@@ -10,7 +10,7 @@ using Tennisclub_DAL;
 namespace Tennisclub_DAL.Migrations
 {
     [DbContext(typeof(TennisclubContext))]
-    [Migration("20201026213541_InitialMigration")]
+    [Migration("20201219153643_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
