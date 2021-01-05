@@ -26,13 +26,7 @@ namespace Tennisclub_BL.Services.MemberServices
 
         public IEnumerable<MemberReadDto> GetAllActiveMembers(string federationNr, string firstName, string lastName, string zipCode, string city)
         {
-            return _repository.GetAll(filter: member => member.Active == true
-            && (member.FederationNr == federationNr || federationNr == null)
-            && (firstName == null || member.FirstName.Contains(firstName))
-            && (lastName == null || member.LastName.Contains(lastName))
-            && (member.Zipcode == zipCode || zipCode == null)
-            && (member.City == city || city == null), 
-            includeProperties: x => x.Gender);
+            return _repository.GetAllActiveMembers(federationNr, firstName, lastName, zipCode, city);
         }
 
         public MemberReadDto GetById(int id)
@@ -52,19 +46,28 @@ namespace Tennisclub_BL.Services.MemberServices
 
             ValidateFields(memberCreateDto.FederationNr, memberCreateDto.FirstName, memberCreateDto.LastName, memberCreateDto.Address, memberCreateDto.Number, memberCreateDto.Addition, memberCreateDto.Zipcode, memberCreateDto.City, memberCreateDto.PhoneNr);
 
+            if (string.IsNullOrWhiteSpace(memberCreateDto.Addition))
+                memberCreateDto.Addition = null;
+
+            if (string.IsNullOrWhiteSpace(memberCreateDto.PhoneNr))
+                memberCreateDto.PhoneNr = null;
+
             return _repository.Add(memberCreateDto);
         }
         public MemberReadDto Update(MemberUpdateDto memberUpdateDto)
-        {
+        {           
             var list = _repository.GetAll(member => member.FederationNr == memberUpdateDto.FederationNr && member.Id != memberUpdateDto.Id);
 
             if (list.Count() != 0)
-                throw new ArgumentException($"FederationNr must be unique");
-
-            if (GetById(memberUpdateDto.Id) == null)
-                throw new ArgumentException($"Member to update cannot be found");
+                throw new ArgumentException($"FederationNr must be unique");           
 
             ValidateFields(memberUpdateDto.FederationNr, memberUpdateDto.FirstName, memberUpdateDto.LastName, memberUpdateDto.Address, memberUpdateDto.Number, memberUpdateDto.Addition, memberUpdateDto.Zipcode, memberUpdateDto.City, memberUpdateDto.PhoneNr);
+
+            if (string.IsNullOrWhiteSpace(memberUpdateDto.Addition))
+                memberUpdateDto.Addition = null;
+
+            if (string.IsNullOrWhiteSpace(memberUpdateDto.PhoneNr))
+                memberUpdateDto.PhoneNr = null;
 
             return _repository.Update(memberUpdateDto);
         }
@@ -76,25 +79,25 @@ namespace Tennisclub_BL.Services.MemberServices
 
         private void ValidateFields(string fedNr, string firstName, string lastName, string address, string number, string addition, string zipcode, string city, string phoneNr)
         {
-            if (string.IsNullOrEmpty(fedNr) || fedNr.Length > MAX_FEDERATIONNR)
+            if (string.IsNullOrWhiteSpace(fedNr) || fedNr.Length > MAX_FEDERATIONNR)
                 throw new ArgumentException($"FederationNr cannot be empty or more than {MAX_FEDERATIONNR} characters");
 
-            if (string.IsNullOrEmpty(firstName) || firstName.Length > MAX_FIRSTNAME)
+            if (string.IsNullOrWhiteSpace(firstName) || firstName.Length > MAX_FIRSTNAME)
                 throw new ArgumentException($"First name cannot be empty or more than {MAX_FIRSTNAME} characters");
 
-            if (string.IsNullOrEmpty(lastName) || lastName.Length > MAX_LASTNAME)
+            if (string.IsNullOrWhiteSpace(lastName) || lastName.Length > MAX_LASTNAME)
                 throw new ArgumentException($"Last name cannot be empty or more than {MAX_LASTNAME} characters");
 
-            if (string.IsNullOrEmpty(address) || address.Length > MAX_ADDRESS)
+            if (string.IsNullOrWhiteSpace(address) || address.Length > MAX_ADDRESS)
                 throw new ArgumentException($"Address cannot be empty or more than {MAX_ADDRESS} characters");
 
-            if (string.IsNullOrEmpty(number) || number.Length > MAX_NUMBER)
+            if (string.IsNullOrWhiteSpace(number) || number.Length > MAX_NUMBER)
                 throw new ArgumentException($"Number cannot be empty or more than {MAX_NUMBER} characters");
 
-            if (string.IsNullOrEmpty(zipcode) || zipcode.Length > MAX_ZIPCODE)
+            if (string.IsNullOrWhiteSpace(zipcode) || zipcode.Length > MAX_ZIPCODE)
                 throw new ArgumentException($"Zipcode cannot be empty or more than {MAX_ZIPCODE} characters");
 
-            if (string.IsNullOrEmpty(city) || city.Length > MAX_CITY)
+            if (string.IsNullOrWhiteSpace(city) || city.Length > MAX_CITY)
                 throw new ArgumentException($"City cannot be empty or more than {MAX_CITY} characters");
 
             if (phoneNr?.Length > MAX_PHONENR)

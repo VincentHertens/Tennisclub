@@ -16,14 +16,12 @@ namespace Tennisclub_BL.Services.MemberFineServices
             _repository = repository;
         }
 
-        public IEnumerable<MemberFineReadDto> GetAllByMember(int id, DateTime? handoutDate, DateTime? paymentDate)
+        public IEnumerable<MemberFineReadDto> GetAllMemberFinesByMember(int id, DateTime? handoutDate, DateTime? paymentDate)
         {
             if (id < 1)
                 throw new ArgumentOutOfRangeException("Id cannot have a value less than 1");
 
-            return _repository.GetAll(filter: fine => fine.MemberId == id 
-            && (fine.HandoutDate == handoutDate || handoutDate == null)
-            && (fine.PaymentDate == paymentDate || paymentDate == null));
+            return _repository.GetAllMemberFinesByMember(id, handoutDate, paymentDate);
         }
 
         public MemberFineReadDto GetById(int id)

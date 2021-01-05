@@ -4,13 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Tennisclub_Common.MemberDTO;
 using Tennisclub_Common.MemberRoleDTO;
 using Tennisclub_Common.RoleDTO;
@@ -18,9 +12,6 @@ using Tennisclub_WPF.Helpers;
 
 namespace Tennisclub_WPF.Views
 {
-    /// <summary>
-    /// Interaction logic for MemberRoleView.xaml
-    /// </summary>
     public partial class MemberRoleView : UserControl
     {
         public MemberRoleView()
@@ -160,7 +151,6 @@ namespace Tennisclub_WPF.Views
         {
             await UpdateMemberRole(MemberListDataGrid, UpdateEndDateMemberDatePicker);
             await GetMemberListMemberRoles();
-            //ControlManager.LoopVisualTree(ManageMembersListGrid, null);
         }
 
         private async Task UpdateRoleList()
@@ -168,7 +158,6 @@ namespace Tennisclub_WPF.Views
             MemberReadDto member = MembersDataGrid.SelectedItem as MemberReadDto;
             await UpdateMemberRole(RolesListDataGrid, UpdateEndDateRoleDatePicker);
             await LoadMemberRoles($"memberroles/bymember/{member.Id}", RolesListDataGrid);
-            //ControlManager.LoopVisualTree(ManageMembersListGrid, null);
         }      
 
         private void AddOnEnterHandler(object sender, KeyEventArgs e)

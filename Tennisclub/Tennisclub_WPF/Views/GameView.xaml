@@ -62,7 +62,6 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         
-        <!--List-->
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -173,7 +172,6 @@
             
         </Grid>
 
-        <!-- Create, update, delete -->
         <Grid  x:Name="ManagementGrid" Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
@@ -334,24 +332,7 @@
                     <Button x:Name="BackToMembersBtn" Content="Go back to members" Grid.Row="7" Style="{StaticResource btnStyle}" Click="BackToMembersBtn_Click"/>
 
                 </Grid>
-
             </Grid>
-            
         </Grid>
-
-
-
-
-        <!--<TabControl Background="#36393f" BorderThickness="0">
-            <TabItem x:Name="GameListTabItem" Header="Game list" Style="{StaticResource tabItemStyle}">
-                
-            </TabItem>
-            <TabItem x:Name="AddGameTabItem" Header="Create game" Style="{StaticResource tabItemStyle}">
-                
-            </TabItem>
-            <TabItem x:Name="UpdateGameTabItem" Header="Update game" Style="{StaticResource tabItemStyle}">
-                
-            </TabItem>
-        </TabControl>-->
     </Grid>
 </UserControl>

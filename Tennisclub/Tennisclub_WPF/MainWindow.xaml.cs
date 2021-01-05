@@ -23,7 +23,6 @@ namespace Tennisclub_WPF
     {
         public MainWindow()
         {
-            //DataContext = new MemberViewModel();
             InitializeComponent();
             DataContext = new MainViewModel();
         }

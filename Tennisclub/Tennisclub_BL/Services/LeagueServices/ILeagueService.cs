@@ -7,6 +7,6 @@ namespace Tennisclub_BL.Services.LeagueServices
 {
     public interface ILeagueService
     {
-        IEnumerable<LeagueReadDto> GetAll();
+        IEnumerable<LeagueReadDto> GetAllLeagues();
     }
 }

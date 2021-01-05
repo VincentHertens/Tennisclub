@@ -12,9 +12,6 @@ using Tennisclub_WPF.Helpers;
 
 namespace Tennisclub_WPF.Views
 {
-    /// <summary>
-    /// Interaction logic for GameResultView.xaml
-    /// </summary>
     public partial class GameResultView : UserControl
     {
         public GameResultView()

@@ -17,21 +17,17 @@ namespace Tennisclub_BL.Services.GameServices
             _repository = repository;
         }
 
-        public IEnumerable<GameReadDto> GetAllByDate(DateTime? date)
-        {           
-            return _repository.GetAll(filter: game => (game.Date == date || date == null),
-                orderBy: game => game.OrderBy(x => x.Date),
-                x => x.Member, x => x.League);
+        public IEnumerable<GameReadDto> GetAllGamesByDate(DateTime? date)
+        {
+            return _repository.GetAllGamesByDate(date);
         }
 
-        public IEnumerable<GameReadDto> GetAllByMember(int id, DateTime? date)
+        public IEnumerable<GameReadDto> GetAllGamesByMember(int id, DateTime? date)
         {
             if (id < 1)
                 throw new ArgumentOutOfRangeException("Id cannot have a value less than 1");
 
-            return _repository.GetAll(filter: game => (game.Date == date || date == null) && game.MemberId == id, 
-                orderBy: game => game.OrderBy(x => x.Date), 
-                x => x.Member, x => x.League);
+            return _repository.GetAllGamesByMember(id, date);
         }
 
         public GameReadDto GetById(int id)
@@ -73,7 +69,7 @@ namespace Tennisclub_BL.Services.GameServices
 
         private void ValidateFields(string gameNumber)
         {
-            if (string.IsNullOrEmpty(gameNumber) || gameNumber.Length > MAX_GAMENUMBER)
+            if (string.IsNullOrWhiteSpace(gameNumber) || gameNumber.Length > MAX_GAMENUMBER)
                 throw new ArgumentException($"Game number cannot be empty or more than {MAX_GAMENUMBER} characters");
         }
     }

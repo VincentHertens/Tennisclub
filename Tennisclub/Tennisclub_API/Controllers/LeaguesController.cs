@@ -18,9 +18,9 @@ namespace Tennisclub_API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<LeagueReadDto> GetAll()
+        public IEnumerable<LeagueReadDto> GetAllLeagues()
         {
-            return _service.GetAll();
+            return _service.GetAllLeagues();
         }
     }
 }

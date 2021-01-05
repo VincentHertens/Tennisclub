@@ -16,9 +16,8 @@ namespace Tennisclub_BL.Services.RoleServices
             _repository = repository;
         }
 
-        public IEnumerable<RoleReadDto> GetAll()
+        public IEnumerable<RoleReadDto> GetAllRoles()
         {
-            //return _repository.GetAll();
             return _repository.GetAllRolesSP();
         }
 
@@ -54,7 +53,7 @@ namespace Tennisclub_BL.Services.RoleServices
 
         private void ValidateFields(string name)
         {
-            if (string.IsNullOrEmpty(name) || name.Length > MAX_NAME)
+            if (string.IsNullOrWhiteSpace(name) || name.Length > MAX_NAME)
                 throw new ArgumentException($"Name cannot be empty or more than {MAX_NAME} characters");
         }
     }

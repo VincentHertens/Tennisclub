@@ -8,5 +8,8 @@ namespace Tennisclub_DAL.Repositories.GameRepositories
 {
     public interface IGameRepository : IGenericRepository<Game, GameReadDto, GameCreateDto, GameUpdateDto, int>
     {
+        public IEnumerable<GameReadDto> GetAllGamesByDate(DateTime? date);
+
+        public IEnumerable<GameReadDto> GetAllGamesByMember(int id, DateTime? date);
     }
 }

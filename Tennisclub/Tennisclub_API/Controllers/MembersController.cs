@@ -18,7 +18,7 @@ namespace Tennisclub_API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<MemberReadDto>> GetAll([FromQuery] string federationNr, [FromQuery] string firstName, [FromQuery] string lastName, [FromQuery] string zipCode, [FromQuery] string city)
+        public ActionResult<IEnumerable<MemberReadDto>> GetAllActiveMembers([FromQuery] string federationNr, [FromQuery] string firstName, [FromQuery] string lastName, [FromQuery] string zipCode, [FromQuery] string city)
         {
             return Ok(_service.GetAllActiveMembers(federationNr, firstName, lastName, zipCode, city));
         }

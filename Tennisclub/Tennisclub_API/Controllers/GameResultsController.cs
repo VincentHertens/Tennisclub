@@ -18,11 +18,11 @@ namespace Tennisclub_API.Controllers
         }
 
         [HttpGet("bymember/{id}")]
-        public ActionResult<IEnumerable<GameResultReadDto>> GetAllByMember(int id, [FromQuery] DateTime? date)
+        public ActionResult<IEnumerable<GameResultReadDto>> GetAllGameResultsByMember(int id, [FromQuery] DateTime? date)
         {
             try
             {
-                return Ok(_service.GetAllByMember(id, date));
+                return Ok(_service.GetAllGameResultsByMember(id, date));
             }
             catch (Exception e)
             {

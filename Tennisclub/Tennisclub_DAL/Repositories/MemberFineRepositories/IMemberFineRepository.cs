@@ -8,6 +8,6 @@ namespace Tennisclub_DAL.Repositories.MemberFineRepositories
 {
     public interface IMemberFineRepository : IGenericRepository<MemberFine, MemberFineReadDto, MemberFineCreateDto, MemberFineUpdateDto, int>
     {
-
+        public IEnumerable<MemberFineReadDto> GetAllMemberFinesByMember(int id, DateTime? handoutDate, DateTime? paymentDate);
     }
 }

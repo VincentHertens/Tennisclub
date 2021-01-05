@@ -36,9 +36,6 @@ namespace Tennisclub_WPF
             var url = $"{_baseUrl}{path}";
             var response = await Client.PostAsync(url, new StringContent(JsonConvert.SerializeObject(createDto), Encoding.UTF8, "application/json"));
 
-            //if (!response.IsSuccessStatusCode)
-            //    return null;
-
             var json = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
@@ -46,8 +43,6 @@ namespace Tennisclub_WPF
                 MessageBox.Show(json.ToString(), "Error", MessageBoxButton.OK);
                 return null;
             }
-
-            //var json = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<T>(json);
         }
@@ -59,9 +54,6 @@ namespace Tennisclub_WPF
             var url = $"{_baseUrl}{path}";
             var response = await Client.PutAsync(url, new StringContent(JsonConvert.SerializeObject(updateDto), Encoding.UTF8, "application/json"));
 
-            //if (!response.IsSuccessStatusCode)
-            //    return null;
-
             var json = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
@@ -70,21 +62,19 @@ namespace Tennisclub_WPF
                 return null;
             }
 
-            //var json = await response.Content.ReadAsStringAsync();
-
             return JsonConvert.DeserializeObject<T>(json);
         }
 
         public static async Task Delete(string path)
         {
             var url = $"{_baseUrl}{path}";
-            await Client.DeleteAsync(url);
+            var response = await Client.DeleteAsync(url);           
 
-            //if (!response.IsSuccessStatusCode) return null;
-
-            //var json = await response.Content.ReadAsStringAsync();
-
-            //return JsonConvert.DeserializeObject<T>(json);
+            if (!response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                MessageBox.Show(json.ToString(), "Error", MessageBoxButton.OK);
+            }
         }
     }
 }

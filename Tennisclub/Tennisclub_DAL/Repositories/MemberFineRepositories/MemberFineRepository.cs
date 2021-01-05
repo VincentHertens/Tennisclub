@@ -12,6 +12,13 @@ namespace Tennisclub_DAL.Repositories.MemberFineRepositories
         public MemberFineRepository(TennisclubContext context, IMapper mapper) : base(context, mapper)
         { }
 
+        public IEnumerable<MemberFineReadDto> GetAllMemberFinesByMember(int id, DateTime? handoutDate, DateTime? paymentDate)
+        {
+            return GetAll(filter: fine => fine.MemberId == id
+          && (fine.HandoutDate == handoutDate || handoutDate == null)
+          && (fine.PaymentDate == paymentDate || paymentDate == null));
+        }
+
         public override MemberFineReadDto Add(MemberFineCreateDto createDto)
         {
             var member = _context.Set<Member>().Find(createDto.MemberId);

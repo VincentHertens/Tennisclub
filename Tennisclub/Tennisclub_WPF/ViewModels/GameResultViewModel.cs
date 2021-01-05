@@ -8,19 +8,19 @@ namespace Tennisclub_WPF.ViewModels
 {
     public class GameResultViewModel : GenericViewModel
     {
-        //Member
         private MemberReadDto _member;
+        private GameResultReadDto _gameResult;
+        private byte _scoreTeamMember;
+        private byte _scoreOpponent;
+        private byte _addSetNr;
+        private byte _addScoreTeamMember;
+        private byte _addScoreOpponent;
 
         public MemberReadDto Member
         {
             get { return _member; }
             set { _member = value; OnPropertyChanged("Member"); }
         }
-
-        //Update game result
-        private GameResultReadDto _gameResult;
-        private byte _scoreTeamMember;
-        private byte _scoreOpponent;
 
         public GameResultReadDto GameResult
         {
@@ -45,11 +45,6 @@ namespace Tennisclub_WPF.ViewModels
             get { return _scoreOpponent; }
             set { _scoreOpponent = value; OnPropertyChanged("ScoreOpponent"); }
         }
-
-        //Add game result
-        private byte _addSetNr;
-        private byte _addScoreTeamMember;
-        private byte _addScoreOpponent;
 
         public byte AddSetNr
         {

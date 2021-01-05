@@ -62,7 +62,6 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Overview -->
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -136,7 +135,6 @@
             
         </Grid>
 
-        <!-- Create, update, delete -->
         <Grid x:Name="ManagementGrid" Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
@@ -387,6 +385,5 @@
                 </Button>
             </Grid>
         </Grid>
-        
     </Grid>
 </UserControl>

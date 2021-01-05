@@ -15,14 +15,12 @@ namespace Tennisclub_BL.Services.GameResultServices
             _repository = repository;
         }
 
-        public IEnumerable<GameResultReadDto> GetAllByMember(int id, DateTime? date)
+        public IEnumerable<GameResultReadDto> GetAllGameResultsByMember(int id, DateTime? date)
         {
             if (id < 1)
                 throw new ArgumentOutOfRangeException("Id cannot have a value less than 1");
 
-            return _repository.GetAll(filter: gameResult => gameResult.Game.MemberId == id && (gameResult.Game.Date == date || date == null),
-                orderBy: gameResult => gameResult.OrderBy(x => x.Game.Date),
-                includeProperties: x => x.Game);
+            return _repository.GetAllGameResultsByMember(id, date);
         }
 
         public GameResultReadDto GetById(int id)

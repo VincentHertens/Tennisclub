@@ -20,11 +20,11 @@ namespace Tennisclub_API.Controllers
         }
 
         [HttpGet("bymember/{id}")]
-        public ActionResult<IEnumerable<MemberFineReadDto>> GetAllByMember(int id, [FromQuery] DateTime? handoutDate, DateTime? paymentDate)
+        public ActionResult<IEnumerable<MemberFineReadDto>> GetAllMemberFinesByMember(int id, [FromQuery] DateTime? handoutDate, DateTime? paymentDate)
         {
             try
             {
-                return Ok(_service.GetAllByMember(id, handoutDate, paymentDate));
+                return Ok(_service.GetAllMemberFinesByMember(id, handoutDate, paymentDate));
             }
             catch (Exception e)
             {

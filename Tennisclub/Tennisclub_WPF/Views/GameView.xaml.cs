@@ -8,13 +8,9 @@ using System.Windows.Input;
 using Tennisclub_Common.GameDTO;
 using Tennisclub_Common.LeagueDTO;
 using Tennisclub_Common.MemberDTO;
-using Tennisclub_WPF.Helpers;
 
 namespace Tennisclub_WPF.Views
 {
-    /// <summary>
-    /// Interaction logic for GameView.xaml
-    /// </summary>
     public partial class GameView : UserControl
     {
         public GameView()

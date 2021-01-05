@@ -17,9 +17,9 @@ namespace Tennisclub_API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<GenderReadDto> GetAll()
+        public IEnumerable<GenderReadDto> GetAllGenders()
         {
-            return _service.GetAll();
+            return _service.GetAllGenders();
         }        
     }
 }

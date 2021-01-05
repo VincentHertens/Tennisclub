@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Tennisclub_Common.GameDTO;
 using Tennisclub_DAL.Models;
 
@@ -9,6 +11,20 @@ namespace Tennisclub_DAL.Repositories.GameRepositories
     {
         public GameRepository(TennisclubContext context, IMapper mapper) : base(context, mapper)
         { }
+
+        public IEnumerable<GameReadDto> GetAllGamesByDate(DateTime? date)
+        {
+            return GetAll(filter: game => (game.Date == date || date == null),
+                orderBy: game => game.OrderBy(x => x.Date),
+                x => x.Member, x => x.League);
+        }
+
+        public IEnumerable<GameReadDto> GetAllGamesByMember(int id, DateTime? date)
+        {
+            return GetAll(filter: game => (game.Date == date || date == null) && game.MemberId == id,
+               orderBy: game => game.OrderBy(x => x.Date),
+               x => x.Member, x => x.League);
+        }
 
         public override GameReadDto Add(GameCreateDto createDto)
         {

@@ -8,17 +8,16 @@ namespace Tennisclub_WPF.ViewModels
 {
     public class GameViewModel : GenericViewModel
     {
-        //Member
         private MemberReadDto _member;
+        private GameReadDto _game;
+        private string _gameNumber;
+        private DateTime? _date;
 
         public MemberReadDto Member
         {
             get { return _member; }
             set { _member = value; OnPropertyChanged("Member"); }
         }
-
-        //Game
-        private GameReadDto _game;
 
         public GameReadDto Game
         {
@@ -31,15 +30,11 @@ namespace Tennisclub_WPF.ViewModels
             }
         }
 
-        private string _gameNumber;
-
         public string GameNumber
         {
             get { return _gameNumber; }
             set { _gameNumber = value; OnPropertyChanged("GameNumber"); }
         }
-
-        private DateTime? _date;
 
         public DateTime? Date
         {

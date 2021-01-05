@@ -15,7 +15,7 @@ namespace Tennisclub_BL.Services.LeagueServices
             _repository = repository;
         }
 
-        public IEnumerable<LeagueReadDto> GetAll()
+        public IEnumerable<LeagueReadDto> GetAllLeagues()
         {
             return _repository.GetAll();
         }

@@ -13,7 +13,7 @@ namespace Tennisclub_BL.Services.GenderServices
             _repository = repository;
         }
 
-        public IEnumerable<GenderReadDto> GetAll()
+        public IEnumerable<GenderReadDto> GetAllGenders()
         {
             return _repository.GetAll();
         }

@@ -14,7 +14,12 @@ namespace Tennisclub_BL.Services.MemberRoleServices
         public MemberRoleService(IMemberRoleRepository repository)
         {
             _repository = repository;
-        }       
+        }
+
+        public IEnumerable<MemberRoleReadDto> GetAllMemberRolesByRoles(List<byte> roles)
+        {
+            return _repository.GetAllMemberRolesByRoles(roles);
+        }
 
         public IEnumerable<MemberRoleReadDto> GetAllMemberRolesByMember(int id)
         {
@@ -22,17 +27,6 @@ namespace Tennisclub_BL.Services.MemberRoleServices
                 throw new ArgumentOutOfRangeException("Id cannot have a value less than 1");
 
             return _repository.GetAllMemberRolesByMemberInlineQuery(id);
-
-            //return _repository.GetAll(filter : memberRole => memberRole.MemberId == id,
-            //    orderBy: null,
-            //    includeProperties: x => x.Role);
-        }
-
-        public IEnumerable<MemberRoleReadDto> GetAllMemberRolesByRoles(List<byte> roles)
-        {
-            return _repository.GetAll(filter: memberRole => roles.Contains(memberRole.RoleId), 
-                orderBy: null,
-                x => x.Member, x => x.Role );           
         }
 
         public MemberRoleReadDto GetById(int id)

@@ -81,7 +81,6 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
             </DataGrid.Columns>
         </DataGrid>
-       
 
         <Grid x:Name="ManagementGrid" Grid.Row="1" Grid.Column="2" Background="#2f3136" Margin="0,15,0,10">
             <Grid.RowDefinitions>
@@ -170,6 +169,5 @@
                 </Button>
             </Grid>
         </Grid>
-        
     </Grid>
 </UserControl>

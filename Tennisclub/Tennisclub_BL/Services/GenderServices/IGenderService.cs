@@ -5,6 +5,6 @@ namespace Tennisclub_BL.Services.GenderServices
 {
     public interface IGenderService
     {
-        public IEnumerable<GenderReadDto> GetAll();
+        public IEnumerable<GenderReadDto> GetAllGenders();
     }
 }

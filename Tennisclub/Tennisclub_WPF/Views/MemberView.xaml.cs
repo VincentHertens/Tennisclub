@@ -4,13 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Tennisclub_Common.GenderDTO;
 using Tennisclub_Common.MemberDTO;
 using Tennisclub_WPF.Helpers;
@@ -87,10 +81,10 @@ namespace Tennisclub_WPF.Views
                     GenderId = gender.Id,
                     Number = ManagementNumberTextBox.Text,
                     Address = ManagementAddressTextBox.Text,
-                    Addition = ManagementAdditionTextBox.Text,
+                    Addition = ManagementAdditionTextBox.Text == string.Empty ? null : ManagementAdditionTextBox.Text,
                     Zipcode = ManagementZipCodeTextBox.Text,
                     City = ManagementCityTextBox.Text,
-                    PhoneNr = ManagementPhoneNrTextBox.Text
+                    PhoneNr = ManagementPhoneNrTextBox.Text == string.Empty ? null : ManagementPhoneNrTextBox.Text
                 };
 
                 var result = await WebAPI.Put<MemberReadDto, MemberUpdateDto>($"members", member);

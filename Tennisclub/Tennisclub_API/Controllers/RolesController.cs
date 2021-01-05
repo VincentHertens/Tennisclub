@@ -18,9 +18,9 @@ namespace Tennisclub_API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<RoleReadDto>> GetAll()
+        public ActionResult<IEnumerable<RoleReadDto>> GetAllRoles()
         {
-            return Ok(_service.GetAll());
+            return Ok(_service.GetAllRoles());
         }
 
         [HttpGet("{id}")]

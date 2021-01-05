@@ -4,6 +4,7 @@ using Tennisclub_DAL.Models;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Tennisclub_DAL.Repositories.MemberRepositories
 {
@@ -12,12 +13,15 @@ namespace Tennisclub_DAL.Repositories.MemberRepositories
         public MemberRepository(TennisclubContext context, IMapper mapper) : base(context, mapper)
         { }
 
-        public override void Delete(int id)
+        public IEnumerable<MemberReadDto> GetAllActiveMembers(string federationNr, string firstName, string lastName, string zipCode, string city)
         {
-            Member member = _dbSet.Find(id);
-            member.Active = false;
-            _dbSet.Update(member);
-            SaveChanges();
+            return GetAll(filter: member => member.Active == true
+           && (member.FederationNr == federationNr || federationNr == null)
+           && (firstName == null || member.FirstName.Contains(firstName))
+           && (lastName == null || member.LastName.Contains(lastName))
+           && (member.Zipcode == zipCode || zipCode == null)
+           && (member.City == city || city == null),
+           includeProperties: x => x.Gender);
         }
 
         public override MemberReadDto Add(MemberCreateDto createDto)
@@ -28,7 +32,10 @@ namespace Tennisclub_DAL.Repositories.MemberRepositories
         }
 
         public override MemberReadDto Update(MemberUpdateDto updateDto)
-        {              
+        {
+            if (_dbSet.AsNoTracking().FirstOrDefault(x => x.Id == updateDto.Id) == null)
+                throw new ArgumentException($"Member to update cannot be found");
+
             Validate(updateDto.GenderId);
 
             var entry = _context.Entry(_mapper.Map<Member>(updateDto));
@@ -46,6 +53,14 @@ namespace Tennisclub_DAL.Repositories.MemberRepositories
 
             SaveChanges();
             return GetById(updateDto.Id);
+        }
+
+        public override void Delete(int id)
+        {
+            Member member = _dbSet.Find(id);
+            member.Active = false;
+            _dbSet.Update(member);
+            SaveChanges();
         }
 
         private void Validate(byte genderId)
