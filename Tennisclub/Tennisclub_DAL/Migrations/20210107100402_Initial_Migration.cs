@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Tennisclub_DAL.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -316,7 +316,7 @@ namespace Tennisclub_DAL.Migrations
             migrationBuilder.DropTable(
                 name: "Genders");
 
-            migrationBuilder.Sql("DROP PROCEDURE sp_getRoles");
+            migrationBuilder.Sql(@"DROP PROCEDURE sp_getRoles");
         }
     }
 }

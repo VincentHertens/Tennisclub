@@ -8,7 +8,6 @@ namespace Tennisclub_DAL.Configurations
 {
     public class GameResultConfiguration : Profile, IEntityTypeConfiguration<GameResult>
     {
-
         public GameResultConfiguration()
         {
             CreateMap<GameResult, GameResultReadDto>();

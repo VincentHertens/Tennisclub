@@ -8,7 +8,6 @@ namespace Tennisclub_DAL.Configurations
 {
     public class MemberRoleConfiguration : Profile, IEntityTypeConfiguration<MemberRole>
     {
-
         public MemberRoleConfiguration()
         {
             CreateMap<MemberRole, MemberRoleReadDto>();

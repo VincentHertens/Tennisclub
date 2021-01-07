@@ -8,7 +8,6 @@ namespace Tennisclub_DAL.Configurations
 {
     public class GenderConfiguration : Profile, IEntityTypeConfiguration<Gender>
     {
-
         public GenderConfiguration()
         {
             CreateMap<Gender, GenderReadDto>();
